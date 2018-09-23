@@ -319,6 +319,11 @@ public class PlayerDancer : MonoBehaviour
             {
                 ScoreManager.Instance.AddScore(10, "Pose", transform.position);
             }
+
+            if( BeatManager.Instance.IsOnBeat())
+            {
+                ScoreManager.Instance.AddScore(10, "ON BEAT", transform.position - new Vector3(0,-0.4f,0));
+            }
         }
     }
 
@@ -338,10 +343,15 @@ public class PlayerDancer : MonoBehaviour
             }
 
                 actionState = EActionState.AS_SPIN;
-            actionTimer = 1.0f;
+            actionTimer = 0.8f;
             anim.Play("Smashing");
             bodyshaker.shake += 0.2f;
             ScoreManager.Instance.AddScore(5, "Spin", transform.position);
+
+            if (BeatManager.Instance.IsOnBeat())
+            {
+                ScoreManager.Instance.AddScore(10, "ON BEAT", transform.position - new Vector3(0, -0.4f, 0));
+            }
         }
     }
 
