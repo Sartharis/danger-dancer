@@ -22,11 +22,14 @@ public class BeatManager : UnitySingleton<BeatManager>
     private float beatTimer;
     private AudioSource songPlayer;
 
-    void Start()
-    {
+    public void startManager(){
         beatTimer = 0;
         songPlayer = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
         PlaySong(startSong);
+    }
+
+    void Start()
+    {
     }
 
     public void PlaySong(Song song)
@@ -48,7 +51,13 @@ public class BeatManager : UnitySingleton<BeatManager>
             OnBeat();
         }
 	}
+    public float getBeat(){
+        return beatTimer;
+    }
 
+    public float getBPM(){
+        return currentSong.audioBPM;
+    }
     public bool IsOnBeat()
     {
         return beatTimer <= beatMissGraceTime || beatTimer >= (currentTimePerBeat - beatMissGraceTime);
