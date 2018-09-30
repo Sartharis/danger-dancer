@@ -17,6 +17,7 @@ public class BeatShrink : MonoBehaviour {
         transform.localScale += new Vector3(scalar, scalar, 0);
 
         if (transform.localScale.x <= 0){
+            BeatManager.Instance.OnBeat -= OnBeat;
             Destroy(gameObject);
         }
     }
