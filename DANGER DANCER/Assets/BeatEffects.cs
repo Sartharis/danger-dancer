@@ -11,10 +11,10 @@ public class BeatEffects : MonoBehaviour
 	void Start ()
     {
         effects = GetComponent<SpriteEffects>();
-	    BeatManager.Instance.OnBeat += OnBeat;
+	    BeatManager.Instance.OnBeat += OnBeatB;
 	}
 	
-    void OnBeat()
+    void OnBeatB()
     {
         effects.deformX = 0.05f;
         effects.deformY = 0.05f;

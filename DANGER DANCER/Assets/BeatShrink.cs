@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BeatShrink : MonoBehaviour {
 
-    [SerializeField] private int beatstoShrink = 10;
+    [SerializeField] private int beatsToShrink = 10;
     float scalar = 0;
     // Use this for initialization
     void Start () {
-        scalar = -transform.localScale.x / beatstoShrink;
+        scalar = -transform.localScale.x / beatsToShrink;
         BeatManager.Instance.OnBeat += OnBeat;
     }
 

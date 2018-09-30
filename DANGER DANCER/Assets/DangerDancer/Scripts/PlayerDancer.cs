@@ -303,26 +303,12 @@ public class PlayerDancer : MonoBehaviour
             Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position, 0.2f);
             foreach(Collider2D col in colls)
             {
-                if(col.tag == "PoseZone")
+                PoseZone pZone = col.GetComponent<PoseZone>();
+                if(pZone)
                 {
-                    inZone = true;
+                    pZone.OnPose();
                     break;
                 }
-            }
-
-            if(inZone)
-            {
-
-                ScoreManager.Instance.AddScore(50, "Pose Zone", transform.position);
-            }
-            else
-            {
-                ScoreManager.Instance.AddScore(10, "Pose", transform.position);
-            }
-
-            if( BeatManager.Instance.IsOnBeat())
-            {
-                ScoreManager.Instance.AddScore(10, "ON BEAT", transform.position - new Vector3(0,-0.4f,0));
             }
         }
     }
@@ -346,12 +332,6 @@ public class PlayerDancer : MonoBehaviour
             actionTimer = 0.8f;
             anim.Play("Smashing");
             bodyshaker.shake += 0.2f;
-            ScoreManager.Instance.AddScore(5, "Spin", transform.position);
-
-            if (BeatManager.Instance.IsOnBeat())
-            {
-                ScoreManager.Instance.AddScore(10, "ON BEAT", transform.position - new Vector3(0, -0.4f, 0));
-            }
         }
     }
 
@@ -409,6 +389,14 @@ public class PlayerDancer : MonoBehaviour
 
 
     // COLLISIONS--------------------------------------------------------------------------------------------------------------------------------------------
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        SpinRing ring = collision.GetComponent<SpinRing>();
+        if(ring && actionState == EActionState.AS_SPIN && Mathf.Abs(Vector2.Dot(moveDir, collision.transform.right)) > 0.1f)
+        {
+            ring.OnSpin();
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
