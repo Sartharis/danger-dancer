@@ -28,6 +28,10 @@ public class PlayerDancer : MonoBehaviour
     [Header("Control")]
     [SerializeField] private float minInput;
     [SerializeField] private float playerControlRegen;
+    [SerializeField] private float poseDuration;
+    [SerializeField] private float spinDuration;
+    [SerializeField] private float spinMaxSpeed;
+    [SerializeField] private AnimationCurve spinCurve;
 
     [Header("Collision")]
     [SerializeField] private LayerMask wallMask;
@@ -36,6 +40,7 @@ public class PlayerDancer : MonoBehaviour
     public Shaker bodyshaker;
 
     private EActionState actionState;
+    private Vector2 actionStartPoint;
     private ERunState runState;
     private Vector2 moveDir;
     private float moveSpeed;
@@ -294,8 +299,9 @@ public class PlayerDancer : MonoBehaviour
     {
         if (CanDoAction())
         {
+            actionStartPoint = transform.position;
             actionState = EActionState.AS_POSE;
-            actionTimer = 0.8f;
+            actionTimer = poseDuration;
             anim.Play("Smashing");
             bodyshaker.shake += 0.1f;
 
@@ -328,8 +334,9 @@ public class PlayerDancer : MonoBehaviour
                 moveDir = new Vector2(dir_x,dir_y);
             }
 
-                actionState = EActionState.AS_SPIN;
-            actionTimer = 0.8f;
+            actionStartPoint = transform.position;
+            actionState = EActionState.AS_SPIN;
+            actionTimer = spinDuration;
             anim.Play("Smashing");
             bodyshaker.shake += 0.2f;
         }
@@ -362,16 +369,17 @@ public class PlayerDancer : MonoBehaviour
                 moveSpeed = Mathf.Lerp(moveSpeed, 0, 0.1f);
             }
             else if (actionState == EActionState.AS_SPIN)
-            {
-                float x_f = moveDir.x * moveSpeed * Time.deltaTime;
-                float y_f = moveDir.y * moveSpeed * Time.deltaTime;
+            {           
+                float spinSpeed = spinMaxSpeed * spinCurve.Evaluate(1 - (actionTimer / spinDuration));
+                float x_f = moveDir.x * (moveSpeed + spinSpeed) * Time.deltaTime;
+                float y_f = moveDir.y * (moveSpeed + spinSpeed) * Time.deltaTime;
                 transform.position = new Vector2(body.position.x + x_f, body.position.y + y_f);
 
                 transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Mathf.LerpAngle(transform.rotation.eulerAngles.z,
                                                 actionTimer * 360 * 4,
                                                 0.2f)));
 
-                moveSpeed = Mathf.Lerp(moveSpeed, 5, 0.1f);
+                moveSpeed = Mathf.Lerp(moveSpeed, 0, 0.1f);
             }
         }
     }
