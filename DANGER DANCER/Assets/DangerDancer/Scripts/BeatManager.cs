@@ -30,6 +30,7 @@ public class BeatManager : UnitySingleton<BeatManager>
 
     void Start()
     {
+        PlaySong(startSong);
     }
 
     public void PlaySong(Song song)

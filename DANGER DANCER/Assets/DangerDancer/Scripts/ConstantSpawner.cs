@@ -24,29 +24,14 @@ public class ConstantSpawner : MonoBehaviour
         spawned += 1;
         Instantiate(spawnTarget, transform.position, transform.rotation);
     }
-    void Update()
+
+    void Update ()
     {
-        //if (spawned < maxSpawned)
-        //{
-            //spawnTime += Time.deltaTime;
-            if (GameObject.Find("LevelManager").GetComponent<EventManager>().CheckTag("Police"))
-            {
-                //spawnTime = 0;
-                Spawn();
-            }
-        //}
-        //else
-        //{
-        //    spawnTime = 0;
-        //}
+        spawnTime += Time.deltaTime;
+        if (spawnTime >= spawnDelay)
+        {
+            spawnTime = 0;
+            Spawn();
+        }
     }
-    //void Update ()
-    //{
-    //    spawnTime += Time.deltaTime;
-    //    if (spawnTime >= spawnDelay)
-    //    {
-    //        spawnTime = 0;
-    //        Spawn();
-    //    }
-    //}
 }

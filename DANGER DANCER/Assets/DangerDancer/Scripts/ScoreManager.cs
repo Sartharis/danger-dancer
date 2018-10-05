@@ -20,7 +20,6 @@ public class ScoreManager : UnitySingleton<ScoreManager>
         {
             LevelManager.Instance.LoseRound();
         }
-        Debug.Log(audienceScore);
     }
 
     public void AddScore(int addScore, string reason, Vector3 position)
