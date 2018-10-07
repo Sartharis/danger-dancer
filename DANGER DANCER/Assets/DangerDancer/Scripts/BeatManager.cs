@@ -22,14 +22,10 @@ public class BeatManager : UnitySingleton<BeatManager>
     private float beatTimer;
     private AudioSource songPlayer;
 
-    public void startManager(){
-        beatTimer = 0;
-        songPlayer = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
-        PlaySong(startSong);
-    }
-
     void Start()
     {
+        beatTimer = 0;
+        songPlayer = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
         PlaySong(startSong);
     }
 

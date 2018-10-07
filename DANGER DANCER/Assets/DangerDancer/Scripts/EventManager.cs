@@ -10,8 +10,7 @@ public class EventManager : UnitySingleton<BeatManager>
     void Start()
     {
         intervals = new Dictionary<string, List<float>>();
-        gameObject.GetComponent<BeatManager>().startManager();
-        bpm = gameObject.GetComponent<BeatManager>().getBPM();
+        bpm = BeatManager.Instance.getBPM();
         PopulateTags();
 
     }

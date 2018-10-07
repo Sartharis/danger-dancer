@@ -45,20 +45,14 @@ public class JumpingMine : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("hmm seems like this is the collision");
-        Debug.Log(collision.tag);
         if (collision.tag == "Player")
         {
             Destroy(gameObject);
         }
-        // Vector3 newV = new Vector3(-rigidBody.velocity.x, -rigidBody.velocity.y, 0);
-        // newV.Normalize();
-        // rigidBody.velocity = newV * moveSpeed;
     }
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        Debug.Log("Am I getting here at all?");
         ChangeDirection(coll);
     }
 }
