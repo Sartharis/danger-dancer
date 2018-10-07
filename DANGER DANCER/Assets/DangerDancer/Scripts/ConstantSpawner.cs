@@ -25,7 +25,7 @@ public class ConstantSpawner : MonoBehaviour
         Instantiate(spawnTarget, transform.position, transform.rotation);
     }
 
-	void Update ()
+    void Update ()
     {
         spawnTime += Time.deltaTime;
         if (spawnTime >= spawnDelay)

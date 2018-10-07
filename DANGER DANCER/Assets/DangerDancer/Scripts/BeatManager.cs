@@ -48,7 +48,13 @@ public class BeatManager : UnitySingleton<BeatManager>
             OnBeat();
         }
 	}
+    public float getBeat(){
+        return beatTimer;
+    }
 
+    public float getBPM(){
+        return currentSong.audioBPM;
+    }
     public bool IsOnBeat()
     {
         return beatTimer <= beatMissGraceTime || beatTimer >= (currentTimePerBeat - beatMissGraceTime);

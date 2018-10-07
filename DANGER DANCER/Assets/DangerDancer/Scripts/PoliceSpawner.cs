@@ -27,16 +27,16 @@ public class PoliceSpawner : MonoBehaviour
     {
 		if( spawned < maxSpawned )
         {
-            spawnTime += Time.deltaTime;
-            if(spawnTime >= spawnDelay)
+            //spawnTime += Time.deltaTime;
+            if(gameObject.GetComponent<EventManager>().CheckTag("Police"))
             {
-                spawnTime = 0;
+                //spawnTime = 0;
                 Spawn();
             }
         }
-        else
-        {
-            spawnTime = 0;
-        }
+        //else
+        //{
+        //    spawnTime = 0;
+        //}
 	}
 }
