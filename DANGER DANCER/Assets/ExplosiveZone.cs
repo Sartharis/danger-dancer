@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class ExplosiveZone : MonoBehaviour {
 
-
-    [SerializeField]
-    private float spinSpeed = 1000f;
     [SerializeField]
     private float destroyTime = 0.5f;
-    [SerializeField]
-    private float acceleration = -2000f;
     private bool spin = false;
     private SpriteEffects effects;
 
