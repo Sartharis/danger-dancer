@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-enum EActionState
+public enum EActionState
 {
     AS_IDLE,
     AS_SPIN,
@@ -39,7 +39,7 @@ public class PlayerDancer : MonoBehaviour
     [Header("Components")]
     public Shaker bodyshaker;
 
-    private EActionState actionState;
+    public EActionState actionState;
     private Vector2 actionStartPoint;
     private ERunState runState;
     private Vector2 moveDir;
