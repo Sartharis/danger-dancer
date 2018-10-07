@@ -2,9 +2,10 @@
 
 <eventList>
 	<!--<event>beat,spawnpoint index,thing to be spawned</event>-->
-	<event>5,1,police</event>
-	<event>5,3,police</event>
+	<event>1,1,square</event>
+	<event>5,0,police</event>
+	<event>5,2,police</event>
+	<event>10,0,police</event>
+	<event>10,0,police</event>
 	<event>10,1,police</event>
-	<event>10,1,police</event>
-	<event>10,2,police</event>
 </eventList>

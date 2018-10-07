@@ -54,27 +54,14 @@ public class XMLDeserializer : MonoBehaviour {
     }
 }
 
-public class SpawnEvent{
-    int beat;
-    int index;
-    string spawned;
+public struct SpawnEvent{
+    public int beat;
+    public int index;
+    public string spawned;
 
     public SpawnEvent(string b, string i, string s){
         beat = int.Parse(b);
         index = int.Parse(i);
         spawned = s;
-    }
-
-    public int getBeat(){
-        return beat;
-    }
-
-    public int getIndex()
-    {
-        return index;
-    }
-
-    public string getSpawned(){
-        return spawned;
     }
 }
