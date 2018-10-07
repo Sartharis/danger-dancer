@@ -23,14 +23,14 @@ public class XMLDeserializer : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (finishedLoading){
-            Debug.Log("New");
-            foreach(var e in spawnEvents){
-                Debug.Log("Beat " + e.getBeat().ToString());
-                Debug.Log("Index " + e.getIndex().ToString());
-                Debug.Log("Spawned " + e.getSpawned());
-            }
-        }
+        // if (finishedLoading){
+        //     Debug.Log("New");
+        //     foreach(var e in spawnEvents){
+        //         Debug.Log("Beat " + e.getBeat().ToString());
+        //         Debug.Log("Index " + e.getIndex().ToString());
+        //         Debug.Log("Spawned " + e.getSpawned());
+        //     }
+        // }
 
     }
 
@@ -43,6 +43,14 @@ public class XMLDeserializer : MonoBehaviour {
             spawnEvents.Add(new SpawnEvent(values[0], values[1], values[2]));
         }
         finishedLoading = true;
+    }
+
+    public List<SpawnEvent> getSpawnEvent(){
+        if(finishedLoading){
+            return spawnEvents;
+        }else{
+            return null;
+        }
     }
 }
 
