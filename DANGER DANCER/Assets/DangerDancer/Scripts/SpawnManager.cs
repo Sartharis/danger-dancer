@@ -8,7 +8,8 @@ public class SpawnManager : UnitySingleton<SpawnManager>
 	private int beat;
 	[SerializeField] Transform[] spawnPositions;
 	[SerializeField] public List<SpawnEvent> spawnList;
-	private int spawnIndex;
+    [SerializeField] DelayedSpawner delayedSpawner;
+    private int spawnIndex;
 
     private void Start()
     {
@@ -45,9 +46,10 @@ public class SpawnManager : UnitySingleton<SpawnManager>
 		{
 			while (spawnIndex < spawnList.Count && beat >= spawnList [spawnIndex].beat)
 			{
-				GameObject obj = GetComponent<SpawnDict>().get (spawnList [spawnIndex].spawned);
-				Instantiate (obj, spawnPositions [spawnList [spawnIndex].index].position, Quaternion.identity);
-				spawnIndex += 1;
+                DelayedSpawner dspawner = Instantiate(delayedSpawner, spawnPositions[spawnList[spawnIndex].index].position, Quaternion.identity);
+                GameObject obj = GetComponent<SpawnDict>().get(spawnList[spawnIndex].spawned);
+                dspawner.objectToSpawn = obj;
+                spawnIndex += 1;
 			}
 		}
 	}
