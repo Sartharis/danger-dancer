@@ -15,8 +15,16 @@ public class PoseZone : MonoBehaviour
         effects = GetComponent<SpriteEffects>();
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        PlayerDancer player = collision.GetComponent<PlayerDancer>();
+        if(player && player.actionState == EActionState.AS_POSE && !pose)
+        {
+            OnPose();
+        }
+    }
 
-    public void OnPose()
+    public virtual void OnPose()
     {
         ScoreManager.Instance.AddScore(20, "Pose Zone", transform.position);
         pose = true;

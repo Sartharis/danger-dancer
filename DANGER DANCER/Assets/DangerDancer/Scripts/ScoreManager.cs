@@ -7,6 +7,7 @@ public class ScoreManager : UnitySingleton<ScoreManager>
     public float audienceScore = 50;
     public float audienceScoreMax = 100;
     public float audienceBoredomRate = 10f;
+    public bool reduceScore = true;
 
     void Start ()
     {
@@ -15,10 +16,13 @@ public class ScoreManager : UnitySingleton<ScoreManager>
 	// Update is called once per frame
 	void Update ()
     {
-        audienceScore -= audienceBoredomRate * Time.deltaTime;
-        if (audienceScore <= 0.0f)
+        if(reduceScore)
         {
-            LevelManager.Instance.LoseRound();
+            audienceScore -= audienceBoredomRate * Time.deltaTime;
+            if (audienceScore <= 0.0f)
+            {
+                LevelManager.Instance.LoseRound();
+            }
         }
     }
 

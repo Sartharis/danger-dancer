@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using System.IO;
 using System.Xml.Linq;
 
-public class XMLDeserializer : MonoBehaviour {
+public class XMLDeserializer : UnitySingletonPersistent<XMLDeserializer> {
     XDocument xmlDoc;
     IEnumerable<XElement> items;
     List<SpawnEvent> spawnEvents = new List<SpawnEvent>();
@@ -15,8 +15,8 @@ public class XMLDeserializer : MonoBehaviour {
     bool finishedLoading = false;
 
 	// Use this for initialization
-	void Start () {
-        DontDestroyOnLoad(gameObject);
+	void Start ()
+    {
         LoadXML();
     }
 
@@ -39,7 +39,7 @@ public class XMLDeserializer : MonoBehaviour {
         items = xmlDoc.Descendants("eventList").Elements();
         foreach(var item in items){
             string[] values = item.Value.Split(',');
-            //Debug.Log("happening");
+            Debug.Log(values[0]);
             spawnEvents.Add(new SpawnEvent(values[0], values[1], values[2]));
         }
         finishedLoading = true;
@@ -54,6 +54,7 @@ public class XMLDeserializer : MonoBehaviour {
     }
 }
 
+[System.Serializable]
 public struct SpawnEvent{
     public int beat;
     public int index;

@@ -5,17 +5,23 @@ using UnityEngine;
 public class SpawnManager : UnitySingleton<SpawnManager>
 {
 
-	public int beat;
+	private int beat;
 	[SerializeField] Transform[] spawnPositions;
-	public List<SpawnEvent> spawnList;
-	public int spawnIndex;
+	[SerializeField] public List<SpawnEvent> spawnList;
+	private int spawnIndex;
 
-	// Use this for initialization
-	void Start ()
+    private void Start()
+    {
+        beat = 0;
+        spawnList = null;
+        spawnIndex = 0;
+    }
+
+    public void StartSpawning ()
 	{
-		beat = 0;
+        beat = 0;
+        spawnIndex = 0;
 		BeatManager.Instance.OnBeat += incrementBeat;
-		spawnIndex = 0;
 	}
 	
 	// Update is called once per frame
@@ -23,7 +29,7 @@ public class SpawnManager : UnitySingleton<SpawnManager>
 	{
 		if (spawnList == null)
 		{
-			spawnList = GetComponent<XMLDeserializer> ().getSpawnEvent ();
+			spawnList = XMLDeserializer.Instance.getSpawnEvent();
 		}
 	}
 

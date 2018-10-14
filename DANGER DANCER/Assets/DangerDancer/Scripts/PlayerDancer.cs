@@ -42,11 +42,12 @@ public class PlayerDancer : MonoBehaviour
     public EActionState actionState;
     private Vector2 actionStartPoint;
     private ERunState runState;
-    private Vector2 moveDir;
+    public Vector2 moveDir;
     private float moveSpeed;
     private int fallTicks;
     private float playerControlFactor;
     private float accelerationModifier;
+    private Vector2 queuedDir;
 
     private float actionTimer;
 
@@ -62,6 +63,7 @@ public class PlayerDancer : MonoBehaviour
         bodyshaker = transform.Find("Body").GetComponent<Shaker>();;
         headsprite = transform.Find("Body").transform.Find("Head").GetComponent<SpriteRenderer>();
         moveSpeed = walkSpeed;
+        BeatManager.Instance.OnBeat += OnBeat;
     }
 
 
@@ -127,7 +129,7 @@ public class PlayerDancer : MonoBehaviour
 
     public bool canMove()
     {
-        return !isFallen() && actionState == EActionState.AS_IDLE;
+        return !isFallen();
     }
 
     public bool isMoving()
@@ -181,110 +183,34 @@ public class PlayerDancer : MonoBehaviour
         return Mathf.Rad2Deg * Mathf.Atan2(dirvec.y, dirvec.x);
     }
 
+    private void OnBeat()
+    {
+        if(queuedDir.magnitude >= minInput)
+        {
+             StartSpin();
+        }
+        queuedDir = new Vector2();
+    }
+
     private void MoveUpdate()
     {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-
-        if (Mathf.Sqrt(h * h + v * v) >= minInput)
+        if (Mathf.Abs(h) >= Mathf.Abs(v))
         {
-            float yaw = Mathf.Atan2(v, h);
-            float dir_x = Mathf.Cos(yaw);
-            float dir_y = Mathf.Sin(yaw);
-
-            //If running, we don't immediately switch direction but move towards target direction
-            if (isRunning())
-            {
-                Vector2 moveVector = moveDir;
-                Vector2 addVector = new Vector2(dir_x, dir_y);
-
-                moveSpeed -= (1 - Mathf.Max(0, Vector2.Dot(moveVector, addVector))) * turnDeceleration;
-                moveDir = ((moveDir * moveSpeed) + (addVector * runManouverability * playerControlFactor)).normalized;
-            }
-            else
-            {
-                moveSpeed = walkSpeed;
-                moveDir = new Vector2(dir_x, dir_y);
-            }
-        }
-        else if (!isRunning())
-        {
-            moveSpeed = 0;
-        }
-
-
-
-        if (Mathf.Sqrt(h * h + v * v) >= minInput)
-        {
-            switch (runState)
-            {
-                case ERunState.RS_ATTACK:
-                    if (moveSpeed < runAttackMaxSpeed)
-                    {
-                        moveSpeed += runAttackAcceleration * Time.deltaTime;
-                        if (moveSpeed >= runAttackMaxSpeed) { moveSpeed = runAttackMaxSpeed; }
-                    }
-                    else
-                    {
-                        runState = ERunState.RS_DECAY;
-                    }
-                    break;
-
-                case ERunState.RS_DECAY:
-                    if (moveSpeed > runDecaySpeed)
-                    {
-                        moveSpeed -= runDecayDeceleration * Time.deltaTime * accelerationModifier;
-                        if (moveSpeed <= runDecaySpeed) { moveSpeed = runDecaySpeed; }
-                    }
-                    else
-                    {
-                        runState = ERunState.RS_SUSTAIN;
-                    }
-                    break;
-
-                case ERunState.RS_SUSTAIN:
-                    if (moveSpeed < runDecaySpeed)
-                    {
-                        moveSpeed += runAttackAcceleration * Time.deltaTime * accelerationModifier;
-                    }
-                    else if (moveSpeed < runSustainMaxSpeed)
-                    {
-                        moveSpeed += runSustainAcceleration * Time.deltaTime * accelerationModifier;
-                        if (moveSpeed >= runSustainMaxSpeed) { moveSpeed = runSustainMaxSpeed; }
-                    }
-                    break;
-
-                default:
-                    break;
-
-            }
+            queuedDir = new Vector2(h,0);
         }
         else
         {
-            if (moveSpeed > walkSpeed)
-            {
-                moveSpeed -= runReleaseDeceleration * Time.deltaTime * accelerationModifier;
-                if (moveSpeed <= walkSpeed)
-                {
-                    //Reset to the initial run state for future running
-                    runState = ERunState.RS_ATTACK;
-                    moveSpeed = walkSpeed;
-                }
-            }
+            queuedDir = new Vector2(0,v);
         }
+        
 
-        if (moveSpeed > 0)
+        if (queuedDir.magnitude >= minInput && BeatManager.Instance.IsOnBeat() && CanDoAction())
         {
-            float x_f = moveDir.x * moveSpeed * Time.deltaTime;
-            float y_f = moveDir.y * moveSpeed * Time.deltaTime;
-            transform.position = new Vector2(body.position.x + x_f, body.position.y + y_f);
+            StartSpin();
+            queuedDir = new Vector2();
         }
-
-        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Mathf.LerpAngle(transform.rotation.eulerAngles.z,
-                                                                             GetTargetRotation(),
-                                                                             0.2f)));
-
-        accelerationModifier = Mathf.Lerp(accelerationModifier, 1, accelerationModifierLerp);
     }
 
 
@@ -305,17 +231,16 @@ public class PlayerDancer : MonoBehaviour
             anim.Play("Smashing");
             bodyshaker.shake += 0.1f;
 
-            bool inZone= false;
-            Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position, 0.2f);
-            foreach(Collider2D col in colls)
-            {
-                PoseZone pZone = col.GetComponent<PoseZone>();
-                if(pZone)
-                {
-                    pZone.OnPose();
-                    break;
-                }
-            }
+//             Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position, 0.2f);
+//             foreach(Collider2D col in colls)
+//             {
+//                 PoseZone pZone = col.GetComponent<PoseZone>();
+//                 if(pZone)
+//                 {
+//                     pZone.OnPose();
+//                     break;
+//                 }
+//             }
         }
     }
 
@@ -323,8 +248,8 @@ public class PlayerDancer : MonoBehaviour
     {
         if (CanDoAction())
         {
-            float h = Input.GetAxis("Horizontal");
-            float v = Input.GetAxis("Vertical");
+            float h = queuedDir.x;
+            float v = queuedDir.y;
 
             if (Mathf.Sqrt(h * h + v * v) >= minInput)
             {
@@ -363,7 +288,7 @@ public class PlayerDancer : MonoBehaviour
                 transform.position = new Vector2(body.position.x + x_f, body.position.y + y_f);
 
                 transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Mathf.LerpAngle(transform.rotation.eulerAngles.z,
-                                                actionTimer * 360 * 2f,
+                                                actionTimer * 360 * 6f,
                                                 0.2f)));
 
                 moveSpeed = Mathf.Lerp(moveSpeed, 0, 0.1f);
@@ -397,14 +322,6 @@ public class PlayerDancer : MonoBehaviour
 
 
     // COLLISIONS--------------------------------------------------------------------------------------------------------------------------------------------
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        SpinRing ring = collision.GetComponent<SpinRing>();
-        if(ring && actionState == EActionState.AS_SPIN && Mathf.Abs(Vector2.Dot(moveDir, collision.transform.right)) > 0.1f)
-        {
-            ring.OnSpin();
-        }
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

@@ -2,10 +2,30 @@
 
 <eventList>
 	<!--<event>beat,spawnpoint index,thing to be spawned</event>-->
-	<event>1,1,square</event>
-	<event>5,0,police</event>
-	<event>5,2,police</event>
-	<event>10,0,police</event>
-	<event>10,0,police</event>
-	<event>10,1,police</event>
+	<event>4,16,posezone</event>
+	<event>6,18,posezone</event>
+	<event>8,21,posezone</event>
+	<event>10,23,posezone</event>
+
+  <event>16,10,bouncemine</event>
+  <event>16,23,spinringhoriz2</event>
+  <event>18,16,spinringhoriz2</event>
+  <event>20,18,spinringhoriz2</event>
+  <event>22,21,spinringhoriz2</event>
+
+  <event>30,10,bouncemine</event>
+  <event>30,29,bouncemine</event>
+  <event>30,24,posezone</event>
+  <event>30,15,spinringvert2</event>
+  <event>34,19,spinringvert2</event>
+  <event>34,20,posezone</event>
+  
+  <event>42,10,spinringvert2</event>
+  <event>42,15,explosivezone</event>
+  <event>42,20,spinringvert2</event>
+  
+  <event>48,24,spinringvert2</event>
+  <event>48,19,explosivezone</event>
+  <event>48,34,spinringvert2</event>
+  
 </eventList>
