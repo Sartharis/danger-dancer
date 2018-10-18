@@ -3,29 +3,45 @@
 <eventList>
 	<!--<event>beat,spawnpoint index,thing to be spawned</event>-->
 	<event>4,16,posezone</event>
-	<event>6,18,posezone</event>
-	<event>8,21,posezone</event>
+	<event>4,18,posezone</event>
+	<event>10,21,posezone</event>
 	<event>10,23,posezone</event>
 
-  <event>16,10,bouncemine</event>
-  <event>16,23,spinringhoriz2</event>
-  <event>18,16,spinringhoriz2</event>
-  <event>20,18,spinringhoriz2</event>
-  <event>22,21,spinringhoriz2</event>
+  <event>20,10,bouncemine</event>
+  <event>24,22,spinringhoriz4</event>
+  <event>24,17,spinringhoriz4</event>
 
-  <event>30,10,bouncemine</event>
-  <event>30,29,bouncemine</event>
-  <event>30,24,posezone</event>
-  <event>30,15,spinringvert2</event>
-  <event>34,19,spinringvert2</event>
-  <event>34,20,posezone</event>
-  
-  <event>42,10,spinringvert2</event>
-  <event>42,15,explosivezone</event>
+  <event>34,10,bouncemine</event>
+  <event>34,29,bouncemine</event>
+  <event>38,24,posezone</event>
+  <event>38,24,spinringvert2</event>
   <event>42,20,spinringvert2</event>
+  <event>42,15,posezone</event>
+
+  <event>50,20,spinringvert4</event>
+  <event>50,24,spinringvert4</event>
+
+  <event>60,19,spinringhoriz2</event>
+  <event>60,17,explosivezone</event>
+  <event>60,16,spinringhoriz2</event>
+
+  <event>70,29,spinringhoriz2</event>
+  <event>70,27,explosivezone</event>
+  <event>70,26,spinringhoriz2</event>
+
+  <event>88,12,bouncemine</event>
+  <event>88,27,bouncemine</event>
   
-  <event>48,24,spinringvert2</event>
-  <event>48,19,explosivezone</event>
-  <event>48,34,spinringvert2</event>
+  <event>92,10,explosivezone</event>
+  <event>92,14,explosivezone</event>
+  <event>92,25,explosivezone</event>
+  <event>92,29,explosivezone</event>
+
+  <event>96,11,posezone</event>
+  <event>96,13,posezone</event>
+  <event>104,26,posezone</event>
+  <event>104,28,posezone</event>
+
+
   
 </eventList>

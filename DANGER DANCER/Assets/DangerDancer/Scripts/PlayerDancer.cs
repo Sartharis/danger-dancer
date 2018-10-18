@@ -11,26 +11,12 @@ public enum EActionState
 public class PlayerDancer : MonoBehaviour
 {
 
-    [Header("Run")]
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float runAttackAcceleration;
-    [SerializeField] private float runAttackMaxSpeed;
-    [SerializeField] private float runDecayDeceleration;
-    [SerializeField] private float runDecaySpeed;
-    [SerializeField] private float runSustainAcceleration;
-    [SerializeField] private float runSustainMaxSpeed;
-    [SerializeField] private float runReleaseDeceleration;
-    [SerializeField] private float runHaltingDeceleration;
-    [SerializeField] private float runManouverability;
-    [SerializeField] private float turnDeceleration;
-    [SerializeField] private float accelerationModifierLerp;
-
-    [Header("Control")]
+    [Header("Movement")]
     [SerializeField] private float minInput;
     [SerializeField] private float playerControlRegen;
     [SerializeField] private float poseDuration;
     [SerializeField] private float spinDuration;
-    [SerializeField] private float spinMaxSpeed;
+    [SerializeField] private float spinDistance;
     [SerializeField] private AnimationCurve spinCurve;
 
     [Header("Collision")]
@@ -41,6 +27,7 @@ public class PlayerDancer : MonoBehaviour
 
     public EActionState actionState;
     private Vector2 actionStartPoint;
+    private Vector2 actionEndPoint;
     private ERunState runState;
     public Vector2 moveDir;
     private float moveSpeed;
@@ -48,6 +35,8 @@ public class PlayerDancer : MonoBehaviour
     private float playerControlFactor;
     private float accelerationModifier;
     private Vector2 queuedDir;
+    private bool moveAttemptedPress;
+    private bool messedUpBeatPress;
 
     private float actionTimer;
 
@@ -62,8 +51,9 @@ public class PlayerDancer : MonoBehaviour
         anim = GetComponent<Animator>();
         bodyshaker = transform.Find("Body").GetComponent<Shaker>();;
         headsprite = transform.Find("Body").transform.Find("Head").GetComponent<SpriteRenderer>();
-        moveSpeed = walkSpeed;
         BeatManager.Instance.OnBeat += OnBeat;
+        moveAttemptedPress = false;
+        messedUpBeatPress = false;
     }
 
 
@@ -81,33 +71,15 @@ public class PlayerDancer : MonoBehaviour
         {
             if (isFallen())
             {
-                if (fallTicks > 1) bodyshaker.shake += 0.1f;
-                fallTicks -= 1;
-                if (fallTicks <= 0)
+                if(BeatManager.Instance.IsOnBeat())
                 {
-                    body.velocity = new Vector2();
+                    if (fallTicks > 1) bodyshaker.shake += 0.1f;
+                    fallTicks -= 1;
                 }
             }
             else
             {
                 StartPose();
-            }
-        }
-
-        if (Input.GetButtonDown("Fire2"))
-        {
-            if (isFallen())
-            {
-                if (fallTicks > 1) bodyshaker.shake += 0.1f;
-                fallTicks -= 1;
-                if (fallTicks <= 0)
-                {
-                    body.velocity = new Vector2();
-                }
-            }
-            else
-            {
-                StartSpin();
             }
         }
 
@@ -139,7 +111,7 @@ public class PlayerDancer : MonoBehaviour
 
     public bool isRunning()
     {
-        return moveSpeed > walkSpeed;
+        return actionState == EActionState.AS_SPIN;
     }
 
     public Vector2 getRunVector()
@@ -161,10 +133,7 @@ public class PlayerDancer : MonoBehaviour
     {
         if (!isFallen())
         {
-            //moveSpeed = 0;
-            fallTicks = 3;
-            //body.AddForce(fallForce);
-
+            fallTicks = 2;
             ScoreManager.Instance.AddScore(-15, "Oh no", transform.position);
         }
     }
@@ -183,13 +152,20 @@ public class PlayerDancer : MonoBehaviour
         return Mathf.Rad2Deg * Mathf.Atan2(dirvec.y, dirvec.x);
     }
 
+    private void MessUpMove()
+    {
+        bodyshaker.shake += 0.1f;
+        messedUpBeatPress = true;
+        ScoreManager.Instance.AddScore(-5,"Off Beat",transform.position);
+    }
+
     private void OnBeat()
     {
-        if(queuedDir.magnitude >= minInput)
+        if( moveAttemptedPress && queuedDir.magnitude >= minInput && actionState == EActionState.AS_IDLE)
         {
-             StartSpin();
+            MessUpMove();
         }
-        queuedDir = new Vector2();
+        messedUpBeatPress = false;
     }
 
     private void MoveUpdate()
@@ -206,11 +182,37 @@ public class PlayerDancer : MonoBehaviour
         }
         
 
-        if (queuedDir.magnitude >= minInput && BeatManager.Instance.IsOnBeat() && CanDoAction())
+        if (queuedDir.magnitude >= minInput)
         {
-            StartSpin();
-            queuedDir = new Vector2();
+            if(!moveAttemptedPress && !messedUpBeatPress)
+            {
+                if (BeatManager.Instance.IsOnBeat() && CanDoAction())
+                {
+                    StartSpin();
+                    queuedDir = new Vector2();
+
+                    if (isFallen())
+                    {
+                        if (fallTicks > 1) bodyshaker.shake += 0.1f;
+                        fallTicks -= 1;
+                    }
+
+                }
+                else
+                {
+
+                    MessUpMove();
+                }
+                moveAttemptedPress = true;
+            }
         }
+        else
+        {
+            moveAttemptedPress = false;
+        }
+
+
+        
     }
 
 
@@ -230,17 +232,6 @@ public class PlayerDancer : MonoBehaviour
             actionTimer = poseDuration;
             anim.Play("Smashing");
             bodyshaker.shake += 0.1f;
-
-//             Collider2D[] colls = Physics2D.OverlapCircleAll(transform.position, 0.2f);
-//             foreach(Collider2D col in colls)
-//             {
-//                 PoseZone pZone = col.GetComponent<PoseZone>();
-//                 if(pZone)
-//                 {
-//                     pZone.OnPose();
-//                     break;
-//                 }
-//             }
         }
     }
 
@@ -260,6 +251,7 @@ public class PlayerDancer : MonoBehaviour
             }
 
             actionStartPoint = transform.position;
+            actionEndPoint = transform.position + (Vector3)moveDir * spinDistance;
             actionState = EActionState.AS_SPIN;
             actionTimer = spinDuration;
             anim.Play("Smashing");
@@ -283,28 +275,17 @@ public class PlayerDancer : MonoBehaviour
 
             if (actionState == EActionState.AS_POSE)
             {
-                float x_f = moveDir.x * moveSpeed * Time.deltaTime;
-                float y_f = moveDir.y * moveSpeed * Time.deltaTime;
-                transform.position = new Vector2(body.position.x + x_f, body.position.y + y_f);
-
                 transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Mathf.LerpAngle(transform.rotation.eulerAngles.z,
                                                 actionTimer * 360 * 6f,
                                                 0.2f)));
-
-                moveSpeed = Mathf.Lerp(moveSpeed, 0, 0.1f);
             }
             else if (actionState == EActionState.AS_SPIN)
             {           
-                float spinSpeed = spinMaxSpeed * spinCurve.Evaluate(1 - (actionTimer / spinDuration));
-                float x_f = moveDir.x * (moveSpeed + spinSpeed) * Time.deltaTime;
-                float y_f = moveDir.y * (moveSpeed + spinSpeed) * Time.deltaTime;
-                transform.position = new Vector2(body.position.x + x_f, body.position.y + y_f);
-
+                Vector3 spinPoint = actionStartPoint + (actionEndPoint - actionStartPoint) * spinCurve.Evaluate(1 - (actionTimer / spinDuration));
+                body.MovePosition(spinPoint);
                 transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Mathf.LerpAngle(transform.rotation.eulerAngles.z,
                                                 actionTimer * 360 * 4,
                                                 0.2f)));
-
-                moveSpeed = Mathf.Lerp(moveSpeed, 0, 0.1f);
             }
         }
     }
@@ -333,11 +314,10 @@ public class PlayerDancer : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-       playerControlFactor = 0;
-       moveDir = Vector2.Reflect(moveDir, coll.contacts[0].normal);
         if (actionState == EActionState.AS_SPIN)
         {
-            ScoreManager.Instance.AddScore(5, "Spin bounce", transform.position);
+            actionEndPoint = actionStartPoint;
+            actionStartPoint = transform.position;
         }
     }
 }
