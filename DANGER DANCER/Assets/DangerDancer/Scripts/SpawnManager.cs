@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using UnityEngine;
 
 public class SpawnManager : UnitySingleton<SpawnManager>
@@ -9,6 +10,7 @@ public class SpawnManager : UnitySingleton<SpawnManager>
 	[SerializeField] Transform[] spawnPositions;
 	[SerializeField] public List<SpawnEvent> spawnList;
     [SerializeField] DelayedSpawner delayedSpawner;
+    public TextAsset spawnData;
     private int spawnIndex;
 
     private void Start()

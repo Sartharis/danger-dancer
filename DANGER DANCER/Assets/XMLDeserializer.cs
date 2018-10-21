@@ -35,7 +35,7 @@ public class XMLDeserializer : UnitySingletonPersistent<XMLDeserializer> {
     }
 
     void LoadXML(){
-        xmlDoc = XDocument.Load("Assets/Resources/XML/test.xml");
+        xmlDoc = XDocument.Parse(SpawnManager.Instance.spawnData.ToString());
         items = xmlDoc.Descendants("eventList").Elements();
         foreach(var item in items){
             string[] values = item.Value.Split(',');
