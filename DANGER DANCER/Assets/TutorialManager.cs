@@ -33,6 +33,7 @@ public class TutorialManager : UnitySingleton<TutorialManager>
         else
         {
             SpawnManager.Instance.StartSpawning();
+            TileManager.Instance.StartSpawning();
             ScoreManager.Instance.reduceScore = true;
         }
     }
@@ -71,6 +72,7 @@ public class TutorialManager : UnitySingleton<TutorialManager>
                     yield return new WaitForSeconds(endTutorialDelay);
                     GameManager.Instance.didTutorial = true;
                     SpawnManager.Instance.StartSpawning();
+                    TileManager.Instance.StartSpawning();
                     ScoreManager.Instance.reduceScore = true;
                     phase = ETutorialPhase.TP_END;
                     break;
