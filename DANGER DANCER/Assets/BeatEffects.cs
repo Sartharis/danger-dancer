@@ -6,7 +6,7 @@ public class BeatEffects : MonoBehaviour
 {
 
     private SpriteEffects effects;
-    [SerializeField] float pulseIntensity = 0.05f;
+    public float pulseIntensity = 0.05f;
 
 	// Use this for initialization
 	void Start ()

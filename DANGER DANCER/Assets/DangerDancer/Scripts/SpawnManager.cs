@@ -49,9 +49,11 @@ public class SpawnManager : UnitySingleton<SpawnManager>
 			while (spawnIndex < spawnList.Count && beat >= spawnList [spawnIndex].beat)
 			{
                 DelayedSpawner dspawner = Instantiate(delayedSpawner, spawnPositions[spawnList[spawnIndex].index].position, Quaternion.identity);
-                GameObject obj = GetComponent<SpawnDict>().get(spawnList[spawnIndex].spawned);
+                GameObject obj = SpawnDict.Instance.get(spawnList[spawnIndex].spawned).spawnObj;
+                dspawner.isBad = SpawnDict.Instance.get(spawnList[spawnIndex].spawned).isBad;
                 dspawner.objectToSpawn = obj;
                 spawnIndex += 1;
+                
 			}
 		}
 	}

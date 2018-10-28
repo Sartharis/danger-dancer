@@ -7,22 +7,23 @@ public struct SpawnEntry
 {
     public string key;
     public GameObject spawnObj;
+    public bool isBad;
 };
 
-public class SpawnDict : MonoBehaviour
+public class SpawnDict : UnitySingleton<SpawnDict>
 {
     [SerializeField] List<SpawnEntry> spawnEntry;
 
-    public GameObject get(string k)
+    public SpawnEntry get(string k)
     {
         for (int i = 0; i < spawnEntry.Count; i++)
         {
             if (spawnEntry[i].key == k)
             {
-                return spawnEntry[i].spawnObj;
+                return spawnEntry[i];
             }
         }
 
-        return null;
+        return spawnEntry[0];
     }
 }

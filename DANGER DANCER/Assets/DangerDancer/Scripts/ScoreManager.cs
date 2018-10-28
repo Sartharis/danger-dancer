@@ -6,7 +6,7 @@ public class ScoreManager : UnitySingleton<ScoreManager>
 {
     public float audienceScore = 50;
     public float audienceScoreMax = 100;
-    public float audienceBoredomRate = 10f;
+    public AnimationCurve audienceBoredomCurve;
     public bool reduceScore = true;
 
     void Start ()
@@ -18,12 +18,17 @@ public class ScoreManager : UnitySingleton<ScoreManager>
     {
         if(reduceScore)
         {
-            audienceScore -= audienceBoredomRate * Time.deltaTime;
+            audienceScore -= audienceBoredomCurve.Evaluate(GetScoreRatio()) * Time.deltaTime;
             if (audienceScore <= 0.0f)
             {
                 LevelManager.Instance.LoseRound();
             }
         }
+    }
+
+    public float GetScoreRatio()
+    {
+        return Mathf.Clamp(audienceScore/audienceScoreMax,0,1);
     }
 
     public void AddScore(int addScore, string reason, Vector3 position)

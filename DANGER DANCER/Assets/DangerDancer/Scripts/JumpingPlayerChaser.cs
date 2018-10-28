@@ -21,11 +21,9 @@ public class JumpingPlayerChaser : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         moveDir = GameObject.FindGameObjectsWithTag("Arena")[0].transform.position - transform.position;
-        var angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
-        Debug.Log(angle);
-        Debug.Log(Quaternion.AngleAxis(angle, transform.forward));
-        transform.rotation = Quaternion.AngleAxis(angle, transform.forward);
         moveDir.Normalize();
+        var angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
+        transform.Rotate (0,0,angle-90);
         
 	}
 	
@@ -48,7 +46,6 @@ public class JumpingPlayerChaser : MonoBehaviour
         }
         else
         {
-            // transform.Translate(0, 0, translation);
             float x_f = moveDir.x * initSpeed * Time.deltaTime;
             float y_f = moveDir.y * initSpeed * Time.deltaTime;
             transform.position = new Vector2(rigidBody.position.x + x_f, rigidBody.position.y + y_f);
@@ -83,12 +80,9 @@ public class JumpingPlayerChaser : MonoBehaviour
         }
         if (collision.tag == "Arena")
         {
-            Debug.Log("In!");
             inArena = true;
             gameObject.layer = 9;
             navAgent = GetComponent<PolyNav.PolyNavAgent>();
-            // navAgent.SetDestination(GameObject.FindGameObjectsWithTag("Arena")[0].transform.position);
-            // Debug.Log(GameObject.FindGameObjectsWithTag("Arena")[0].transform.position);
             maxSpeed = navAgent.maxSpeed + Random.Range(-0.1f,0);
             maxMass = navAgent.mass;
         }
