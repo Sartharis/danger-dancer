@@ -1,17 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+[System.Serializable]
+public struct moverNode{
+    public Vector3 position;
+    public float zRotation;
+    public bool Clockwise;
+    public moverNode(Vector3 p,float zrot, bool isClockwise)
+    {
+        zRotation = zrot;
+        Clockwise = isClockwise;
+        position = p;
+    }
+}
+
 public class Mover : MonoBehaviour
 {
-    [SerializeField] List<Vector3> Path=new List<Vector3>();
+    [SerializeField] List<moverNode> Path;
     [SerializeField] float speed;
     float timeElapsed;
     int numberOfNodes;
     [SerializeField] int currentNodeIndex;
 
-    Vector3 currentNode;
-    Vector3 nextNode;
+    moverNode currentNode;
+    moverNode nextNode;
     float timeUntilNextNode;
+    float angleDifference;
 
     void Start()
     {
@@ -24,22 +38,47 @@ public class Mover : MonoBehaviour
         numberOfNodes = Path.Count;
 
         if(numberOfNodes == 0){
-            Path.Add(transform.position);
+            Path.Add(new moverNode(transform.position,0,true));
             numberOfNodes = Path.Count;
         }
         currentNodeIndex = 0;
         currentNode = Path[0];
         nextNode = Path[(currentNodeIndex+1) % numberOfNodes];
-        timeUntilNextNode = (Vector3.Distance(currentNode, nextNode)/speed);
+        timeUntilNextNode = (Vector3.Distance(currentNode.position, nextNode.position)/speed);
+        transform.rotation = Quaternion.Euler(0, 0, currentNode.zRotation);
 
     }
-
+    float getAngleDifference(float cRot, float nRot, bool clockwise)
+    {
+        float angDiff = nRot - cRot;
+        //if (clockwise)
+        //{
+        //    if (angDiff < 0)
+        //    {
+        //        angDiff = 360 - angDiff;
+        //    }
+        //}
+        //else
+        //{
+        //    if (angDiff > 0)
+        //    {
+        //        angDiff = angDiff - 360;
+        //    }
+        //}
+        return angDiff;
+    }
     // Update is called once per frame
     void cycleNodes(){
         currentNodeIndex = (1+ currentNodeIndex) % numberOfNodes;
         currentNode = nextNode;
         nextNode = Path[(1+currentNodeIndex) % numberOfNodes];
-        timeUntilNextNode = (Vector3.Distance(currentNode, nextNode) / speed);
+        timeUntilNextNode = (Vector3.Distance(currentNode.position, nextNode.position) / speed);
+        transform.rotation = Quaternion.Euler(0, 0, currentNode.zRotation);
+        //angleDifference = getAngleDifference(currentNode.zRotation, nextNode.zRotation,currentNode.Clockwise);
+    }
+    float getRotationLinear(float cRot)
+    {
+        return cRot+(((timeUntilNextNode - timeElapsed) / timeUntilNextNode)*angleDifference);
     }
     Vector3 getPositionLinear(Vector3 cNode, Vector3 nNode)
     {
@@ -51,7 +90,8 @@ public class Mover : MonoBehaviour
 
         if(timeElapsed < timeUntilNextNode)
         {
-            transform.position = getPositionLinear(currentNode,nextNode);
+            transform.rotation = Quaternion.Euler(0, 0, getRotationLinear(currentNode.zRotation));
+            transform.position = getPositionLinear(currentNode.position,nextNode.position);
         }
         else{
             cycleNodes();
