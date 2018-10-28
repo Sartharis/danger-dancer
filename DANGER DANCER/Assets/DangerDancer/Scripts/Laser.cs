@@ -84,6 +84,8 @@ public class Laser : MonoBehaviour {
         }
     }
     void Update () {
+        laserOrigin = transform.position;
+        laserDirection = transform.up;
         LaserUpdate();
     }
 }
