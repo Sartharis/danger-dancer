@@ -35,8 +35,6 @@ public class PlayerDancer : MonoBehaviour
     public Vector2 moveDir;
     private float moveSpeed;
     private int fallTicks;
-    private float playerControlFactor;
-    private float accelerationModifier;
     private Vector2 queuedDir;
     private bool moveAttemptedPress;
     private bool messedUpBeatPress;
@@ -66,12 +64,6 @@ public class PlayerDancer : MonoBehaviour
     private void Update()
     {
         offBeatGraceTime -= Time.deltaTime;
-
-        if (playerControlFactor < 1.0f)
-        {
-            playerControlFactor += playerControlRegen * Time.deltaTime;
-        }
-        playerControlRegen = Mathf.Clamp(playerControlRegen, 0, 1);
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -120,26 +112,11 @@ public class PlayerDancer : MonoBehaviour
         return actionState == EActionState.AS_SPIN;
     }
 
-    public Vector2 getRunVector()
-    {
-        return moveDir * moveSpeed;
-    }
-
-    public void ModifySpeed(float speedModifier)
-    {
-        moveSpeed = Mathf.Max(0,moveSpeed + speedModifier);
-    }
-
-    public void ModifyAcceleration(float accelerationMod)
-    {
-        accelerationModifier *= accelerationMod;
-    }
-
     public void Fall(Vector2 fallForce)
     {
         if (!isFallen())
         {
-            fallTicks = 2;
+            fallTicks = 1;
             ScoreManager.Instance.AddScore(-15, "Oh no", transform.position);
         }
     }

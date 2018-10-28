@@ -43,14 +43,18 @@ public class XMLDeserializer : UnitySingletonPersistent<XMLDeserializer> {
             string[] values = item.Value.Split(',');
             spawnEvents.Add(new SpawnEvent(values[0], values[1], values[2]));
         }
-        xmlDoc = XDocument.Parse(TileManager.Instance.tileData.ToString());
-        items = xmlDoc.Descendants("eventList").Elements();
-        foreach(var item in items){
-            string b = item.Element("beat").Value;
-            string w = item.Element("width").Value;
-            string h = item.Element("height").Value;
-            string t = Regex.Replace(item.Element("data").Value, "\\s", String.Empty);
-            spawnTileEvents.Add(new SpawnTileEvent(b, t, w, h));
+        if(TileManager.Instance.tileData)
+        {
+            xmlDoc = XDocument.Parse(TileManager.Instance.tileData.ToString());
+            items = xmlDoc.Descendants("eventList").Elements();
+            foreach (var item in items)
+            {
+                string b = item.Element("beat").Value;
+                string w = item.Element("width").Value;
+                string h = item.Element("height").Value;
+                string t = Regex.Replace(item.Element("data").Value, "\\s", String.Empty);
+                spawnTileEvents.Add(new SpawnTileEvent(b, t, w, h));
+            }
         }
         finishedLoading = true;
     }
