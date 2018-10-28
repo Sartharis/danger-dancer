@@ -22,6 +22,9 @@ public class PlayerDancer : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private LayerMask wallMask;
 
+    [Header("Collision")]
+    [SerializeField] private float offBeatGracePeriod;
+
     [Header("Components")]
     public Shaker bodyshaker;
 
@@ -37,6 +40,7 @@ public class PlayerDancer : MonoBehaviour
     private Vector2 queuedDir;
     private bool moveAttemptedPress;
     private bool messedUpBeatPress;
+    private float offBeatGraceTime = 0;
 
     private float actionTimer;
 
@@ -61,6 +65,8 @@ public class PlayerDancer : MonoBehaviour
 
     private void Update()
     {
+        offBeatGraceTime -= Time.deltaTime;
+
         if (playerControlFactor < 1.0f)
         {
             playerControlFactor += playerControlRegen * Time.deltaTime;
@@ -154,9 +160,14 @@ public class PlayerDancer : MonoBehaviour
 
     private void MessUpMove()
     {
+        if( offBeatGraceTime <= 0)
+        {
+            offBeatGraceTime = offBeatGracePeriod;
+            messedUpBeatPress = true;
+            ScoreManager.Instance.AddScore(-5, "Off Beat", transform.position);
+        }
+
         bodyshaker.shake += 0.1f;
-        messedUpBeatPress = true;
-        ScoreManager.Instance.AddScore(-5,"Off Beat",transform.position);
     }
 
     private void OnBeat()
@@ -190,6 +201,7 @@ public class PlayerDancer : MonoBehaviour
                 {
                     StartSpin();
                     queuedDir = new Vector2();
+                    offBeatGraceTime = 0;
 
                     if (isFallen())
                     {

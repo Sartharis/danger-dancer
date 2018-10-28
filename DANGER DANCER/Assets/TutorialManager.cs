@@ -23,18 +23,9 @@ public class TutorialManager : UnitySingleton<TutorialManager>
     [SerializeField] private Transform spinRingSpawnPoint;
     private ETutorialPhase phase = ETutorialPhase.TP_START;
 
-    public void Start()
+    public void StartTutorial()
     {
-        if(!GameManager.Instance.didTutorial)
-        {
-            NextPhase();
-            ScoreManager.Instance.reduceScore = false;
-        }
-        else
-        {
-            SpawnManager.Instance.StartSpawning();
-            ScoreManager.Instance.reduceScore = true;
-        }
+        NextPhase();
     }
 
     public void NextPhase()
@@ -69,9 +60,7 @@ public class TutorialManager : UnitySingleton<TutorialManager>
             case ETutorialPhase.TP_SPIN:
                 {
                     yield return new WaitForSeconds(endTutorialDelay);
-                    GameManager.Instance.didTutorial = true;
-                    SpawnManager.Instance.StartSpawning();
-                    ScoreManager.Instance.reduceScore = true;
+                    LevelManager.Instance.OnTutorialDone();
                     phase = ETutorialPhase.TP_END;
                     break;
                 }

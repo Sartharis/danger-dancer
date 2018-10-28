@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ConstantShake : MonoBehaviour {
 
-    [SerializeField] float shakeValue;
+    public float shakeValue;
     Shaker shake;
 
 	// Use this for initialization

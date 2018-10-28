@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class DelayedSpawner : MonoBehaviour {
     [SerializeField] private int beatsToShrink = 2;
+    [SerializeField] private Sprite goodSprite;
+    [SerializeField] private Sprite badSprite;
+    public bool isBad;
     public GameObject objectToSpawn;
     float scalar = 0;
+    private SpriteRenderer sprite;
     // Use this for initialization
     void Start()
     {
         scalar = -transform.localScale.x / beatsToShrink;
         BeatManager.Instance.OnBeat += OnBeat;
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     void OnBeat()
@@ -32,6 +37,6 @@ public class DelayedSpawner : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		sprite.sprite = isBad ? badSprite : goodSprite;
 	}
 }

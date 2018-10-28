@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : UnitySingleton<LevelManager>
 {
+    public Song levelSong;
+    public Song tutorialSong;
     public bool roundLost = false;
     private bool restarted = false;
     [SerializeField] private float levelRestartTime = 2.0f;
@@ -14,8 +16,31 @@ public class LevelManager : UnitySingleton<LevelManager>
     {
 		roundLost = false;
         restarted = false;
+        if(!GameManager.Instance.didTutorial)
+        {
+            BeatManager.Instance.PlaySong(tutorialSong);
+            ScoreManager.Instance.reduceScore = false;
+            TutorialManager.Instance.StartTutorial();
+        }
+        else
+        {
+            StartLevel();
+        }
 	}
 	
+    public void OnTutorialDone()
+    {
+         GameManager.Instance.didTutorial = true;
+         StartLevel();
+    }
+
+    public void StartLevel()
+    {
+        BeatManager.Instance.PlaySong(levelSong);
+        ScoreManager.Instance.reduceScore = true;
+        SpawnManager.Instance.StartSpawning();
+    }
+
 	// Update is called once per frame
 	void Update ()
     {
