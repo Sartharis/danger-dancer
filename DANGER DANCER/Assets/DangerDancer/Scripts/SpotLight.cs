@@ -21,7 +21,7 @@ public class SpotLight : MonoBehaviour
     {
         Vector2 normal_2d = collision.contacts[0].normal;
         Vector3 direction = rigidBody.velocity;
-        Vector2 reflect = Vector2.Reflect(moveDir, normal_2d);
+        Vector2 reflect = Vector2.Reflect(moveDir, normal_2d) + Random.insideUnitCircle;
         reflect.Normalize();
         moveDir = reflect;
         
@@ -33,10 +33,10 @@ public class SpotLight : MonoBehaviour
         float x_f = moveDir.x * moveSpeed * Time.deltaTime;
         float y_f = moveDir.y * moveSpeed * Time.deltaTime;
         transform.position = new Vector2(rigidBody.position.x + x_f, rigidBody.position.y + y_f);
-        if (!inLight){
+        if (inLight){
             time += Time.deltaTime;
-            if (time > 1.0){
-                ScoreManager.Instance.AddScore(-1, "Boo", transform.position);
+            if (time > 2.0){
+                ScoreManager.Instance.AddScore(15, "Spotlight", transform.position);
                 time = 0;
             }
         }

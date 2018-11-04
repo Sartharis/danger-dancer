@@ -16,7 +16,7 @@ public class ScoreManager : UnitySingleton<ScoreManager>
 	// Update is called once per frame
 	void Update ()
     {
-        if(reduceScore)
+        if(reduceScore && !GameManager.Instance.CHEATNoReduceScore)
         {
             audienceScore -= audienceBoredomCurve.Evaluate(GetScoreRatio()) * Time.deltaTime;
             if (audienceScore <= 0.0f)

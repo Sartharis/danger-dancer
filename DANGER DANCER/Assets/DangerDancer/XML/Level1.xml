@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<eventList>
+	<!--<event>beat,spawnpoint index,thing to be spawned</event>-->
+	<event>8,16,posezone</event>
+	<event>8,18,posezone</event>
+	<event>16,21,posezone</event>
+	<event>16,23,posezone</event>
+
+  <event>24,22,spinringhoriz4</event>
+  <event>24,17,spinringhoriz4</event>
+  
+  <event>32,24,posezone</event>
+  <event>32,24,spinringvert2</event>
+  <event>36,20,spinringvert2</event>
+  <event>36,15,posezone</event>
+
+  <event>40,19,spinringhoriz2</event>
+  <event>40,17,explosivezone</event>
+  <event>40,16,spinringhoriz2</event>
+
+  <event>48,29,spinringhoriz2</event>
+  <event>48,27,explosivezone</event>
+  <event>48,26,spinringhoriz2</event>
+  
+  <event>56,20,spinringvert4</event>
+  <event>56,24,spinringvert4</event>
+  
+  <event>72,29,bouncemine</event>
+  <event>72,10,bouncemine</event>
+
+  <event>76,20,spinringvert2</event>
+  <event>76,15,posezone</event>
+  <event>76,24,posezone</event>
+  <event>76,24,spinringvert2</event>
+  <event>80,23,spinringhoriz2</event>
+  <event>80,17,spinringhoriz2</event>
+
+
+  <event>88,29,bouncemine</event>
+  <event>88,10,bouncemine</event>
+  <event>88,16,posezone</event>
+  <event>88,18,posezone</event>
+  <event>88,21,posezone</event>
+  <event>88,23,posezone</event>
+
+  <event>104,10,bouncemine</event>
+  <event>104,14,bouncemine</event>
+  <event>104,25,bouncemine</event>
+  <event>104,29,bouncemine</event>
+  <event>104,12,spinringhoriz4</event>
+  <event>104,27,spinringhoriz4</event>
+
+  <event>120,10,bouncemine</event>
+  <event>120,14,bouncemine</event>
+  <event>120,16,spinringhoriz2</event>
+  <event>120,21,spinringhoriz2</event>
+  <event>120,19,spinringhoriz2</event>
+  <event>120,24,spinringhoriz2</event>
+  <event>120,17,posezone</event>
+  <event>120,22,posezone</event>
+
+  <event>135,0,throwitem</event>
+  <event>137,2,throwitem</event>
+  <event>138,17,spinringhoriz2</event>
+  <event>138,18,spinringhoriz2</event>
+  
+  <event>139,3,throwitem</event>
+  <event>141,4,throwitem</event>
+  <event>142,22,spinringhoriz2</event>
+  <event>142,23,spinringhoriz2</event>
+  
+  <event>143,5,throwitem</event>
+  <event>147,6,throwitem</event>
+  <event>148,17,spinringhoriz2</event>
+  <event>148,18,spinringhoriz2</event>
+  
+  <event>149,7,throwitem</event>
+  <event>151,8,throwitem</event>
+  <event>152,22,spinringhoriz2</event>
+  <event>152,23,spinringhoriz2</event>
+
+  <event>153,0,throwitem</event>
+  <event>155,2,throwitem</event>
+  <event>156,17,posezone</event>
+
+  <event>157,7,throwitem</event>
+  <event>159,8,throwitem</event>
+  <event>160,12,spinringhoriz2</event>
+  <event>160,27,spinringhoriz2</event>
+
+  <event>160,0,throwitem</event>
+  <event>160,3,throwitem</event>
+  <event>160,5,throwitem</event>
+  <event>160,7,throwitem</event>
+
+  <event>164,22,explosivezone</event>
+  <event>164,15,explosivezone</event>
+  <event>164,19,explosivezone</event>
+
+  <event>165,0,throwitem</event>
+  <event>167,2,throwitem</event>
+  <event>168,24,posezone</event>
+
+  <event>169,3,throwitem</event>
+  <event>171,4,throwitem</event>
+  <event>172,27,spinringhoriz2</event>
+  <event>172,28,spinringhoriz2</event>
+
+  <event>173,5,throwitem</event>
+  <event>175,6,throwitem</event>
+  <event>176,20,posezone</event>
+
+  <event>177,7,throwitem</event>
+  <event>179,8,throwitem</event>
+
+  <event>184,17,spinringhoriz4</event>
+  <event>188,22,spinringhoriz4</event>
+
+  <event>199,17,spotlight</event>
+
+  <event>204,0,jumper</event>
+
+  <event>212,0,jumper</event>
+  <event>212,7,jumper</event>
+  
+</eventList>

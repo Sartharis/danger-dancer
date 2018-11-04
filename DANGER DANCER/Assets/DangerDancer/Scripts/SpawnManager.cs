@@ -6,23 +6,21 @@ using UnityEngine;
 public class SpawnManager : UnitySingleton<SpawnManager>
 {
 
-	private int beat;
 	[SerializeField] Transform[] spawnPositions;
 	[SerializeField] public List<SpawnEvent> spawnList;
     [SerializeField] DelayedSpawner delayedSpawner;
+    [SerializeField] public int numDelay = 2;
     public TextAsset spawnData;
     private int spawnIndex;
 
     private void Start()
     {
-        beat = 0;
         spawnList = null;
         spawnIndex = 0;
     }
 
     public void StartSpawning ()
 	{
-        beat = 0;
         spawnIndex = 0;
 		BeatManager.Instance.OnBeat += incrementBeat;
 	}
@@ -38,7 +36,6 @@ public class SpawnManager : UnitySingleton<SpawnManager>
 
 	void incrementBeat ()
 	{
-		beat += 1;
 		spawnObjects ();
 	}
 
@@ -46,7 +43,18 @@ public class SpawnManager : UnitySingleton<SpawnManager>
 	{
 		if (spawnList != null)
 		{
-			while (spawnIndex < spawnList.Count && beat >= spawnList [spawnIndex].beat)
+            //Moving up to the correct beat index
+            while (spawnIndex < spawnList.Count && BeatManager.Instance.getCurrentBeat() > spawnList[spawnIndex].beat - numDelay)
+            {
+                spawnIndex += 1;
+            }
+            //Moving down to the correct beat index
+            while (spawnIndex < spawnList.Count && spawnIndex > 0 && BeatManager.Instance.getCurrentBeat() < spawnList[spawnIndex].beat - numDelay)
+            {
+                spawnIndex -= 1;
+            }
+            //Actually spawning stuff
+            while (spawnIndex < spawnList.Count && BeatManager.Instance.getCurrentBeat() == spawnList [spawnIndex].beat - numDelay)
 			{
                 DelayedSpawner dspawner = Instantiate(delayedSpawner, spawnPositions[spawnList[spawnIndex].index].position, Quaternion.identity);
                 GameObject obj = SpawnDict.Instance.get(spawnList[spawnIndex].spawned).spawnObj;

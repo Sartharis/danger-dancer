@@ -25,6 +25,7 @@ public class BeatManager : UnitySingleton<BeatManager>
     private float timeLeft;
     private bool playingSong;
     private bool loop;
+    private int currentBeat;
 
     void Start()
     {
@@ -33,20 +34,32 @@ public class BeatManager : UnitySingleton<BeatManager>
         songPlayer = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
     }
 
+    public int getCurrentBeat()
+    {
+        return currentBeat;
+    }
+
     public void PlaySong(Song song)
+    {
+        PlaySong(song, 0);
+    }
+
+    public void PlaySong(Song song, int startBeat)
     {
         currentSong = song;
         beatTimer = 0;
-        currentTimePerBeat = 1 / (song.BPM / 60.0f); 
+        currentTimePerBeat = 1 / (song.BPM / 60.0f);
         songPlayer.Stop();
         songPlayer.clip = song.audioPlayed;
         songPlayer.Play(0);
         playingSong = true;
+        songPlayer.time = startBeat * currentTimePerBeat;
         timeLeft = song.duration;
         loop = song.loop;
+        currentBeat = startBeat;
     }
 
-    void Update ()
+        void Update ()
     {
         if(playingSong)
         {
@@ -55,6 +68,7 @@ public class BeatManager : UnitySingleton<BeatManager>
             {
                 beatTimer = beatTimer - currentTimePerBeat;
                 OnBeat();
+                currentBeat ++;
             }
             timeLeft -= Time.deltaTime;
             if(timeLeft <= 0)

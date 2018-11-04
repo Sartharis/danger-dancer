@@ -5,6 +5,8 @@ using UnityEngine;
 public class JumpingMine : MonoBehaviour
 {
     public float moveSpeed= 3;
+    public bool isRandomDir = true;
+    public Vector2 initialDir = new Vector2(1,0); 
     private Vector2 moveDir;
     Rigidbody2D rigidBody;
 
@@ -12,9 +14,17 @@ public class JumpingMine : MonoBehaviour
 	void Start ()
     {
 		rigidBody = GetComponent<Rigidbody2D>();
-        moveDir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+        if( isRandomDir)
+        {
+            moveDir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));    
+        }
+        else
+        {
+            moveDir = initialDir;
+        }
+
         moveDir.Normalize();
-	}
+    }
 
 	private void ChangeDirection(Collision2D collision)
     {

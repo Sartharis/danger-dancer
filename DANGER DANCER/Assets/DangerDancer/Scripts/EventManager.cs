@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EventManager : UnitySingleton<BeatManager>
 {
-    private Dictionary<string, List<float>> intervals;
+    [SerializeField] private Dictionary<string, List<float>> intervals;
     private float bpm;
     private float globalTimer = 0;
     void Start()
