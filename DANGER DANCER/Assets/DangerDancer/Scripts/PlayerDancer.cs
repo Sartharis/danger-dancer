@@ -17,6 +17,8 @@ public class PlayerDancer : MonoBehaviour
     [SerializeField] private float poseDuration;
     [SerializeField] private float spinDuration;
     [SerializeField] private float spinDistance;
+	[SerializeField] private float invulnerableDuration;
+	[SerializeField] private float blinkPeriod;
     [SerializeField] private AnimationCurve spinCurve;
 
     [Header("Collision")]
@@ -41,9 +43,11 @@ public class PlayerDancer : MonoBehaviour
     private float offBeatGraceTime = 0;
 
     private float actionTimer;
+	private float invulnerableTimer;
 
     private Rigidbody2D body;
     private Animator anim;
+	private SpriteRenderer bodysprite;
     private SpriteRenderer headsprite;
 
 
@@ -51,7 +55,8 @@ public class PlayerDancer : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        bodyshaker = transform.Find("Body").GetComponent<Shaker>();;
+        bodyshaker = transform.Find("Body").GetComponent<Shaker>();
+		bodysprite = transform.Find ("Body").GetComponent<SpriteRenderer> ();
         headsprite = transform.Find("Body").transform.Find("Head").GetComponent<SpriteRenderer>();
         BeatManager.Instance.OnBeat += OnBeat;
         moveAttemptedPress = false;
@@ -73,6 +78,10 @@ public class PlayerDancer : MonoBehaviour
                 {
                     if (fallTicks > 1) bodyshaker.shake += 0.1f;
                     fallTicks -= 1;
+					if (!isFallen ())
+					{
+						invulnerableTimer = invulnerableDuration;
+					}
                 }
             }
             else
@@ -86,6 +95,8 @@ public class PlayerDancer : MonoBehaviour
         {
             MoveUpdate();
         }
+		InvulnerableUpdate();
+
         AnimUpdate();
     }
 
@@ -114,7 +125,7 @@ public class PlayerDancer : MonoBehaviour
 
     public void Fall(Vector2 fallForce)
     {
-        if (!isFallen())
+		if (!isFallen() && invulnerableTimer <= 0.0f)
         {
             fallTicks = 1;
             ScoreManager.Instance.AddScore(-15, "Oh no", transform.position);
@@ -284,7 +295,8 @@ public class PlayerDancer : MonoBehaviour
 
     private void AnimUpdate()
     {
-        headsprite.enabled = !isFallen();
+		bodysprite.enabled = blinkOn();
+		headsprite.enabled = !isFallen() && blinkOn();
         anim.SetBool("Fallen", isFallen());
         anim.SetBool("Running", isRunning());
         anim.SetBool("Moving", isMoving());
@@ -309,4 +321,21 @@ public class PlayerDancer : MonoBehaviour
             actionStartPoint = transform.position;
         }
     }
+
+	private void InvulnerableUpdate()
+	{
+		if (invulnerableTimer > 0.0f)
+		{
+			invulnerableTimer -= Time.deltaTime;
+		}
+	}
+
+	private bool blinkOn()
+	{
+		if (invulnerableTimer <= 0.0f)
+		{
+			return true;
+		}
+		return (Mathf.Floor (invulnerableTimer / blinkPeriod)) % 2 == 0;
+	}
 }
