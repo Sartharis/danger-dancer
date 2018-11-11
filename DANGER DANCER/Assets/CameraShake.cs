@@ -67,7 +67,6 @@ public class CameraShake : UnitySingleton<CameraShake>
             shakeAmount = startAmount * shakePercentage;//Set the amount of shake (% * startAmount).
             shakeDuration = Mathf.Lerp(shakeDuration, 0, 0.1f/*Time.deltaTime*/);//Lerp the time, so it is less and tapers off towards the end.
             //Debug.Log(transform.localRotation.x);
-            Debug.Log(rotationAmount.x);
             //Debug.Log(rotationAmount.x);
 
             if (smooth)
