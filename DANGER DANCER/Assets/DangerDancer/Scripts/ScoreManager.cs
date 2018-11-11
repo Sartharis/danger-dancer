@@ -33,6 +33,7 @@ public class ScoreManager : UnitySingleton<ScoreManager>
 
     public void AddScore(int addScore, string reason, Vector3 position)
     {
+       
         audienceScore += addScore;
         if( audienceScore > audienceScoreMax)
         {

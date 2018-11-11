@@ -26,6 +26,7 @@ public class PoseZone : MonoBehaviour
 
     public virtual void OnPose()
     {
+         CameraShake.Instance.ShakeCamera(0.6f,0.05f);
         ScoreManager.Instance.AddScore(20, "Pose Zone", transform.position);
         pose = true;
         effects.rippleDeformX = -0.1f;
