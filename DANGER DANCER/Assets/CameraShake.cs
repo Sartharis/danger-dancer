@@ -8,7 +8,7 @@ using System.Collections;
 
 public class CameraShake : UnitySingleton<CameraShake>
 {
-
+    public Vector3 initialPos;
     public bool debugMode = false;//Test-run/Call ShakeCamera() on start
 
     public float shakeAmount;//The amount to shake this frame.
@@ -26,7 +26,7 @@ public class CameraShake : UnitySingleton<CameraShake>
 
     void Start()
     {
-
+        initialPos = transform.position;
         if (debugMode) ShakeCamera();
     }
 
@@ -60,12 +60,12 @@ public class CameraShake : UnitySingleton<CameraShake>
         {
 
             Vector3 rotationAmount = Random.insideUnitSphere * shakeAmount;//A Vector3 to add to the Local Rotation
-            rotationAmount.z = 0;//Don't change the Z; it looks funny.
-            rotationAmount.x = rotationAmount.x + (transform.eulerAngles.x - 360);
+            //rotationAmount.z = 0;//Don't change the Z; it looks funny.
+            //rotationAmount.x = rotationAmount.x + (transform.eulerAngles.x - 360);
             shakePercentage = shakeDuration / startDuration;//Used to set the amount of shake (% * startAmount).
 
             shakeAmount = startAmount * shakePercentage;//Set the amount of shake (% * startAmount).
-            shakeDuration = Mathf.Lerp(shakeDuration, 0, Time.deltaTime);//Lerp the time, so it is less and tapers off towards the end.
+            shakeDuration = Mathf.Lerp(shakeDuration, 0, 0.1f/*Time.deltaTime*/);//Lerp the time, so it is less and tapers off towards the end.
             //Debug.Log(transform.localRotation.x);
             Debug.Log(rotationAmount.x);
             //Debug.Log(rotationAmount.x);
@@ -73,7 +73,7 @@ public class CameraShake : UnitySingleton<CameraShake>
             if (smooth)
                 transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(rotationAmount), Time.deltaTime * smoothAmount);
             else
-                transform.localRotation = Quaternion.Euler(rotationAmount);//Set the local rotation the be the rotation amount.
+                transform.position = initialPos + rotationAmount/10;//Set the local rotation the be the rotation amount.
 
             yield return null;
         }

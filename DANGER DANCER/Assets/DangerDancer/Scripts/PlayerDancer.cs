@@ -129,6 +129,7 @@ public class PlayerDancer : MonoBehaviour
         {
             fallTicks = 1;
             ScoreManager.Instance.AddScore(-15, "Oh no", transform.position);
+             CameraShake.Instance.ShakeCamera(1f, 0.05f);
         }
     }
 
@@ -148,11 +149,14 @@ public class PlayerDancer : MonoBehaviour
 
     private void MessUpMove()
     {
-        if( offBeatGraceTime <= 0)
+
+       
+        if ( offBeatGraceTime <= 0)
         {
             offBeatGraceTime = offBeatGracePeriod;
             messedUpBeatPress = true;
             ScoreManager.Instance.AddScore(-5, "Off Beat", transform.position);
+             CameraShake.Instance.ShakeCamera(0.5f, 0.05f);
         }
 
         bodyshaker.shake += 0.1f;
