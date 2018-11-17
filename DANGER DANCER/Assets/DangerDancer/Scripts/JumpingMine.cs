@@ -9,11 +9,13 @@ public class JumpingMine : MonoBehaviour
     public Vector2 initialDir = new Vector2(1,0); 
     private Vector2 moveDir;
     Rigidbody2D rigidBody;
+    ParticleSystem effect;
 
 
 	void Start ()
     {
 		rigidBody = GetComponent<Rigidbody2D>();
+        effect = GetComponent<ParticleSystem>();
         if( isRandomDir)
         {
             moveDir = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));    
@@ -53,6 +55,7 @@ public class JumpingMine : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D coll)
     {
+        effect.Play();
         ChangeDirection(coll);
     }
 }

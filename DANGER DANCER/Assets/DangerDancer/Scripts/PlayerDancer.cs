@@ -135,6 +135,7 @@ public class PlayerDancer : MonoBehaviour
             fallTicks = 1;
             ScoreManager.Instance.AddScore(-15, "Oh no", transform.position);
              CameraShake.Instance.ShakeCamera(1f, 0.05f);
+            GhostRecorder.Instance.addAction(BeatManager.Instance.getCurrentBeat(), new Vector2(0, 0), "FALL");
         }
     }
 
@@ -209,7 +210,6 @@ public class PlayerDancer : MonoBehaviour
                 }
                 else
                 {
-
                     MessUpMove();
                 }
                 moveAttemptedPress = true;
@@ -241,6 +241,8 @@ public class PlayerDancer : MonoBehaviour
             actionTimer = poseDuration;
             anim.Play("Smashing");
             bodyshaker.shake += 0.1f;
+            Debug.Log("Pose");
+            GhostRecorder.Instance.addAction(BeatManager.Instance.getCurrentBeat(), new Vector2(0, 0), "POSE");
         }
     }
 
@@ -265,6 +267,7 @@ public class PlayerDancer : MonoBehaviour
             actionTimer = spinDuration;
             anim.Play("Smashing");
             bodyshaker.shake += 0.2f;
+            GhostRecorder.Instance.addAction(BeatManager.Instance.getCurrentBeat(), moveDir, "MOVE");
         }
     }
 

@@ -1,7 +1,19 @@
 fileFormatVersion: 2
 guid: b704211d443027d44afebc58e8f35ed8
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Throwableobjects_0
+    21300002: Throwableobjects_1
+    21300004: Throwableobjects_2
+    21300006: Throwableobjects_3
+    21300008: Throwableobjects_4
+    21300010: Throwableobjects_5
+    21300012: Throwableobjects_6
+    21300014: Throwableobjects_7
+    21300016: Throwableobjects_8
+    21300018: Throwableobjects_9
+    21300020: Throwableobjects_10
+    21300022: Throwableobjects_11
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -82,7 +94,187 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Throwableobjects_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 213.33334
+        width: 106.666664
+        height: 106.666664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fab9c359dc3e44dd288c64c5892c4d75
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Throwableobjects_1
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 213.33334
+        width: 106.666664
+        height: 106.666664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4331866d1fb94c00b83efc035f725ea
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Throwableobjects_2
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 213.33334
+        width: 106.666664
+        height: 106.666664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13510948c850c40b682b731452ac2aa5
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Throwableobjects_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 107.333336
+        width: 106.666664
+        height: 106.666664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c01d7fd80f1714321a800f9ef9a35264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Throwableobjects_4
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 107.333336
+        width: 106.666664
+        height: 106.666664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03d90aecced4b48b79119797ead3a9e8
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Throwableobjects_5
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 107.333336
+        width: 106.666664
+        height: 106.666664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de142cdd392a74fc59cc6de0f8616442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Throwableobjects_6
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1.3333359
+        width: 106.666664
+        height: 106.666664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f03f868c8c7ba45868d5482d93ca9bcb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Throwableobjects_7
+      rect:
+        serializedVersion: 2
+        x: 106
+        y: 1.3333359
+        width: 106.666664
+        height: 106.666664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f0eca02a690a4b149da690db3fb4b12
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Throwableobjects_8
+      rect:
+        serializedVersion: 2
+        x: 212
+        y: 1.3333359
+        width: 106.666664
+        height: 106.666664
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29c90e1986ed247b5bde2547206bb777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
