@@ -46,7 +46,7 @@ public class SpriteEffects : MonoBehaviour
 
         transform.localScale = initialScale + new Vector3(deformX + rippleDeformX + Random.Range(-1,1)*deformShakeX, 
                                                           deformY + rippleDeformY + Random.Range(-1,1)*deformShakeY, 
-                                                          0);
+                                                          1);
 
     }
 }

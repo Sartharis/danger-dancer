@@ -24,7 +24,10 @@ public class PlayerDancer : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private LayerMask wallMask;
 
-    [Header("Collision")]
+    [Header("Sound")]
+    [SerializeField] private AudioClip beatMissSound;
+
+    [Header("Beat")]
     [SerializeField] private float offBeatGracePeriod;
 
     [Header("Components")]
@@ -49,12 +52,14 @@ public class PlayerDancer : MonoBehaviour
     private Animator anim;
 	private SpriteRenderer bodysprite;
     private SpriteRenderer headsprite;
+    private AudioSource audioPlayer;
 
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioPlayer = GetComponent<AudioSource>();
         bodyshaker = transform.Find("Body").GetComponent<Shaker>();
 		bodysprite = transform.Find ("Body").GetComponent<SpriteRenderer> ();
         headsprite = transform.Find("Body").transform.Find("Head").GetComponent<SpriteRenderer>();
@@ -158,7 +163,7 @@ public class PlayerDancer : MonoBehaviour
             ScoreManager.Instance.AddScore(-5, "Off Beat", transform.position);
              CameraShake.Instance.ShakeCamera(0.5f, 0.05f);
         }
-
+        audioPlayer.PlayOneShot(beatMissSound);
         bodyshaker.shake += 0.1f;
     }
 

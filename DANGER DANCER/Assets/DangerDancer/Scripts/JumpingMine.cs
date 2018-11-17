@@ -40,6 +40,7 @@ public class JumpingMine : MonoBehaviour
         float x_f = moveDir.x * moveSpeed * Time.deltaTime;
         float y_f = moveDir.y * moveSpeed * Time.deltaTime;
         transform.position = new Vector2(rigidBody.position.x + x_f, rigidBody.position.y + y_f);
+        transform.rotation = Quaternion.Euler(0,0,180/Mathf.PI * Mathf.Atan2(moveDir.y,moveDir.x));
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

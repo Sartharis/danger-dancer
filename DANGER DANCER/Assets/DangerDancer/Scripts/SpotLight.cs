@@ -21,7 +21,8 @@ public class SpotLight : MonoBehaviour
     {
         Vector2 normal_2d = collision.contacts[0].normal;
         Vector3 direction = rigidBody.velocity;
-        Vector2 reflect = Vector2.Reflect(moveDir, normal_2d) + Random.insideUnitCircle;
+        Vector2 reflect = 3 * Vector2.Reflect(moveDir, normal_2d) + Random.insideUnitCircle + 
+                          (Vector2)(GameObject.FindGameObjectWithTag("Arena").transform.position - transform.position).normalized;
         reflect.Normalize();
         moveDir = reflect;
         
@@ -33,13 +34,22 @@ public class SpotLight : MonoBehaviour
         float x_f = moveDir.x * moveSpeed * Time.deltaTime;
         float y_f = moveDir.y * moveSpeed * Time.deltaTime;
         transform.position = new Vector2(rigidBody.position.x + x_f, rigidBody.position.y + y_f);
-        if (inLight){
-            time += Time.deltaTime;
-            if (time > 2.0){
-                ScoreManager.Instance.AddScore(15, "Spotlight", transform.position);
-                time = 0;
+        
+        time += Time.deltaTime;
+        if (time > 1.0)
+        {
+            if (inLight)
+            {
+                ScoreManager.Instance.AddScore(10, "Spotlight", transform.position);
             }
+            else
+            {
+                 ScoreManager.Instance.AddScore(-5, "Not in Spotlight", transform.position);
+            }
+
+            time = 0;
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
