@@ -4,18 +4,30 @@ using UnityEngine;
 public class ChainPoseZone : MonoBehaviour
 {
     [SerializeField] private ChainPoseZone chainpose;
+    [SerializeField] private PoseZone posezone;
     bool pose = false;
     private float z;
     public int chainLeftToCreate = 4;
-    readonly float[] nextInChain = { 0, 90, 180, 270};
+    readonly float[] nextInChain = {0, 90, 180, 270};
     private SpriteEffects effects;
     bool isCreated = false;
 
     private void Start()
     {
         effects = GetComponent<SpriteEffects>();
-        z = transform.localRotation.z;
+        int mask = LayerMask.GetMask("Wall");
+        int randomint = Random.Range(0, 3);
+        transform.rotation = Quaternion.Euler(0, 0, nextInChain[randomint]);
+        Vector3 offset = transform.rotation * (new Vector3(3.5f, 0, 0));
+        while (Physics2D.Linecast(transform.position, transform.position + offset, mask))
+        {
+            randomint = Random.Range(0, 3);
+            transform.rotation = Quaternion.Euler(0, 0, nextInChain[randomint]);
+            offset = transform.rotation * (new Vector3(3.5f, 0, 0));
+        }
+
     }
+
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -36,23 +48,22 @@ public class ChainPoseZone : MonoBehaviour
     {
         if (pose == true)
         {
-            if (chainLeftToCreate != 0 && !isCreated)
+            ChainPoseZone clone;
+            PoseZone otherclone;
+            Vector3 offset = transform.rotation * (new Vector3(2.5f, 0, 0));
+            if (chainLeftToCreate == 1)
             {
-                int mask = LayerMask.GetMask("Wall");
-                int randomint = Random.Range(0, 3);
-                ChainPoseZone clone;
-                Vector3 offset = transform.rotation * (new Vector3(2.5f, 0, 0));
-                while (Physics2D.Linecast(transform.position,transform.position+offset,mask))
-                {
-                    randomint = Random.Range(0, 3);
-                    offset = transform.rotation * (new Vector3(2.5f, 0, 0));
-                }
-                clone = Instantiate(chainpose, transform.position + offset, transform.rotation * Quaternion.Euler(0, 0, nextInChain[randomint]));
-                clone.chainLeftToCreate--;
-                isCreated = true;
+                otherclone = Instantiate(posezone, transform.position + offset, transform.rotation);
             }
+            else
+            {
+                clone = Instantiate(chainpose, transform.position + offset, transform.rotation);
+                clone.chainLeftToCreate--;
+            }
+            isCreated = true;
             Destroy(gameObject);
-
         }
-    }
+       
+     }
+
 }
