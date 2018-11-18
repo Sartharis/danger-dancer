@@ -121,7 +121,16 @@
 
   <event>204,0,jumper</event>
 
-  <event>212,0,jumper</event>
   <event>212,7,jumper</event>
-  
+
+  <event>228,15,explosivezone</event>
+  <event>228,17,explosivezone</event>
+  <event>228,19,explosivezone</event>
+  <event>228,26,explosivezone</event>
+  <event>228,28,explosivezone</event>
+
+  <event>228,10,explosivezone</event>
+  <event>228,29,explosivezone</event>
+
+
 </eventList>

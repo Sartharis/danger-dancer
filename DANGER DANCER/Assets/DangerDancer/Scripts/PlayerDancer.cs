@@ -24,7 +24,10 @@ public class PlayerDancer : MonoBehaviour
     [Header("Collision")]
     [SerializeField] private LayerMask wallMask;
 
-    [Header("Collision")]
+    [Header("Sound")]
+    [SerializeField] private AudioClip beatMissSound;
+
+    [Header("Beat")]
     [SerializeField] private float offBeatGracePeriod;
 
     [Header("Components")]
@@ -49,12 +52,14 @@ public class PlayerDancer : MonoBehaviour
     private Animator anim;
 	private SpriteRenderer bodysprite;
     private SpriteRenderer headsprite;
+    private AudioSource audioPlayer;
 
 
     private void Awake()
     {
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioPlayer = GetComponent<AudioSource>();
         bodyshaker = transform.Find("Body").GetComponent<Shaker>();
 		bodysprite = transform.Find ("Body").GetComponent<SpriteRenderer> ();
         headsprite = transform.Find("Body").transform.Find("Head").GetComponent<SpriteRenderer>();
@@ -130,6 +135,7 @@ public class PlayerDancer : MonoBehaviour
             fallTicks = 1;
             ScoreManager.Instance.AddScore(-15, "Oh no", transform.position);
              CameraShake.Instance.ShakeCamera(1f, 0.05f);
+            GhostRecorder.Instance.addAction(BeatManager.Instance.getCurrentBeat(), new Vector2(0, 0), "FALL");
         }
     }
 
@@ -158,7 +164,7 @@ public class PlayerDancer : MonoBehaviour
             ScoreManager.Instance.AddScore(-5, "Off Beat", transform.position);
              CameraShake.Instance.ShakeCamera(0.5f, 0.05f);
         }
-
+        audioPlayer.PlayOneShot(beatMissSound);
         bodyshaker.shake += 0.1f;
     }
 
@@ -204,7 +210,6 @@ public class PlayerDancer : MonoBehaviour
                 }
                 else
                 {
-
                     MessUpMove();
                 }
                 moveAttemptedPress = true;
@@ -236,6 +241,8 @@ public class PlayerDancer : MonoBehaviour
             actionTimer = poseDuration;
             anim.Play("Smashing");
             bodyshaker.shake += 0.1f;
+            Debug.Log("Pose");
+            GhostRecorder.Instance.addAction(BeatManager.Instance.getCurrentBeat(), new Vector2(0, 0), "POSE");
         }
     }
 
@@ -260,6 +267,7 @@ public class PlayerDancer : MonoBehaviour
             actionTimer = spinDuration;
             anim.Play("Smashing");
             bodyshaker.shake += 0.2f;
+            GhostRecorder.Instance.addAction(BeatManager.Instance.getCurrentBeat(), moveDir, "MOVE");
         }
     }
 

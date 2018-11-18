@@ -47,6 +47,8 @@ public class LevelManager : UnitySingleton<LevelManager>
 	    if( !roundLost && ScoreManager.Instance.audienceScore < 0.0f)
         {
             LoseRound();
+            Debug.Log("Lose");
+            GhostRecorder.Instance.endRecording(BeatManager.Instance.getCurrentBeat());
         }
 
         if(roundLost && !restarted)
