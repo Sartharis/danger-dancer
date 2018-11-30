@@ -19,7 +19,7 @@ public class GhostRecorder : UnitySingletonPersistent<GhostRecorder> {
     }
     public void addAction(int t, Vector2 d, String a)
     {
-        acts.Add(new ReplayAction { Atime = t, Direction = d, Action = a });
+       // acts.Add(new ReplayAction { Atime = t, Direction = d, Action = a });
     }
 
     public void endRecording(int t){

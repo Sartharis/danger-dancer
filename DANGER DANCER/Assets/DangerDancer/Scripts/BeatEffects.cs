@@ -17,8 +17,8 @@ public class BeatEffects : MonoBehaviour
 	
     void OnBeatB()
     {
-        effects.deformX = pulseIntensity;
-        effects.deformY = pulseIntensity;
+        effects.deformX += pulseIntensity;
+        effects.deformY += pulseIntensity;
     }
 
 	// Update is called once per frame

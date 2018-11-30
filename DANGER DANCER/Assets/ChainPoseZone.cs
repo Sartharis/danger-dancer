@@ -8,12 +8,14 @@ public class ChainPoseZone : MonoBehaviour
     bool pose = false;
     private float z;
     public int chainLeftToCreate = 4;
-    readonly float[] nextInChain = {0, 90, 180, 270};
-    private SpriteEffects effects;
+    protected readonly float[] nextInChain = {0, 90, 180, 270};
+    protected SpriteEffects effects;
     bool isCreated = false;
+    protected Vector3 targetPoint;
 
     private void Start()
     {
+        targetPoint = transform.position;
         effects = GetComponent<SpriteEffects>();
         int mask = LayerMask.GetMask("Wall");
         int randomint = Random.Range(0, 3);
@@ -40,30 +42,41 @@ public class ChainPoseZone : MonoBehaviour
 
     public virtual void OnPose()
     {
-        ScoreManager.Instance.AddScore(15, "Pose Zone", transform.position);
-        pose = true;
-    }
-
-    public void Update()
-    {
-        if (pose == true)
+        if( (targetPoint - transform.position).magnitude < 0.1f)
         {
             ChainPoseZone clone;
-            PoseZone otherclone;
             Vector3 offset = transform.rotation * (new Vector3(2.5f, 0, 0));
+            
             if (chainLeftToCreate == 1)
             {
-                otherclone = Instantiate(posezone, transform.position + offset, transform.rotation);
+                ScoreManager.Instance.AddScore(15, "Chained Pose Zone", transform.position);
+                Destroy(gameObject);
             }
             else
             {
-                clone = Instantiate(chainpose, transform.position + offset, transform.rotation);
-                clone.chainLeftToCreate--;
+                ScoreManager.Instance.AddScore(10, "Chained Pose Zone", transform.position);
+                targetPoint = transform.position + offset;
+                int mask = LayerMask.GetMask("Wall");
+                int randomint = Random.Range(0, 3);
+                transform.rotation = Quaternion.Euler(0, 0, nextInChain[randomint]);
+                Vector3 offset2 = transform.rotation * (new Vector3(3.5f, 0, 0));
+                while (Physics2D.Linecast(transform.position + offset, transform.position + offset + offset2, mask))
+                {
+                    randomint = Random.Range(0, 3);
+                    transform.rotation = Quaternion.Euler(0, 0, nextInChain[randomint]);
+                    offset2 = transform.rotation * (new Vector3(3.5f, 0, 0));
+                }
+                
             }
-            isCreated = true;
-            Destroy(gameObject);
+            chainLeftToCreate--;
+            effects.deformX += 0.35f;
+            effects.deformY += 0.35f;
         }
-       
-     }
+    }
+
+    private void Update()
+    {
+        transform.position = Vector3.Lerp(transform.position, targetPoint, 0.1f);
+    }
 
 }

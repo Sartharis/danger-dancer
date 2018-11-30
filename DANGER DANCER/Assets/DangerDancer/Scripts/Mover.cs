@@ -26,6 +26,7 @@ public class Mover : MonoBehaviour
     moverNode nextNode;
     float timeUntilNextNode;
     float angleDifference;
+    Quaternion targetRot;
 
     void Start()
     {
@@ -41,11 +42,11 @@ public class Mover : MonoBehaviour
             Path.Add(new moverNode(transform.position,0,true));
             numberOfNodes = Path.Count;
         }
-        currentNodeIndex = 0;
-        currentNode = Path[0];
+        currentNode = Path[currentNodeIndex];
         nextNode = Path[(currentNodeIndex+1) % numberOfNodes];
         timeUntilNextNode = (Vector3.Distance(currentNode.position, nextNode.position)/speed);
         transform.rotation = Quaternion.Euler(0, 0, currentNode.zRotation);
+        targetRot = transform.rotation;
 
     }
     float getAngleDifference(float cRot, float nRot, bool clockwise)
@@ -73,7 +74,7 @@ public class Mover : MonoBehaviour
         currentNode = nextNode;
         nextNode = Path[(1+currentNodeIndex) % numberOfNodes];
         timeUntilNextNode = (Vector3.Distance(currentNode.position, nextNode.position) / speed);
-        transform.rotation = Quaternion.Euler(0, 0, currentNode.zRotation);
+        targetRot = Quaternion.Euler(0, 0, currentNode.zRotation);
         //angleDifference = getAngleDifference(currentNode.zRotation, nextNode.zRotation,currentNode.Clockwise);
     }
     float getRotationLinear(float cRot)
@@ -90,12 +91,14 @@ public class Mover : MonoBehaviour
 
         if(timeElapsed < timeUntilNextNode)
         {
-            transform.rotation = Quaternion.Euler(0, 0, getRotationLinear(currentNode.zRotation));
+            targetRot = Quaternion.Euler(0, 0, getRotationLinear(currentNode.zRotation));
             transform.position = getPositionLinear(currentNode.position,nextNode.position);
         }
         else{
             cycleNodes();
             timeElapsed = 0;
         }
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, 0.1f);
     }
 }

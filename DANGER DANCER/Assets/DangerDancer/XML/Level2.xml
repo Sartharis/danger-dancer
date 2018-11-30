@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<eventList>
+	<!--<event>beat,spawnpoint index,thing to be spawned</event>-->
+	<event>4,17,chainpose</event>
+  
+  <event>14,22,chainpose</event>
+  <event>14,0,laserdown</event>
+  <event>14,2,laserdown</event>
+  
+  <event>24,15,spinringhoriz4</event>
+  <event>24,19,spinringhoriz4</event>
+  
+  <event>32,20,spinringhoriz4</event>
+  <event>32,24,spinringhoriz4</event>
+  
+  <event>46,12,rocketspawner</event>
+  <event>50,27,posezone</event>
+  <event>58,20,chainpose</event>
+  <event>66,24,chainpose</event>
+  <event>70,22,spinringhoriz4</event>
+  
+</eventList>

@@ -7,7 +7,7 @@ public class JumpingMine : MonoBehaviour
     public float moveSpeed= 3;
     public bool isRandomDir = true;
     public Vector2 initialDir = new Vector2(1,0); 
-    private Vector2 moveDir;
+    public Vector2 moveDir;
     Rigidbody2D rigidBody;
     ParticleSystem effect;
 

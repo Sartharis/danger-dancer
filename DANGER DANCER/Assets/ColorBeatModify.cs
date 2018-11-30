@@ -11,6 +11,7 @@ public class ColorBeatModify : MonoBehaviour {
     {
 	    BeatManager.Instance.OnBeat += OnBeat;	
         meshrend = GetComponent<MeshRenderer>();
+        OnBeat();
 	}
 	
 	// Update is called once per frame
@@ -20,7 +21,11 @@ public class ColorBeatModify : MonoBehaviour {
 
     void OnBeat()
     {
-        Color col = Color.HSVToRGB(Random.Range(0.0f, 1.0f),1,1);
-        meshrend.material.color = col;
+        //if(LevelManager.Instance.levelStarted)
+      //  {
+
+            Color col = Color.HSVToRGB(Random.Range(0.0f, 1.0f), 1f, 0.6f);
+            meshrend.material.color = col;
+     //   }
     }
 }

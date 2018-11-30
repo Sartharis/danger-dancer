@@ -4,34 +4,41 @@ using UnityEngine;
 
 public class RocketSpawner : MonoBehaviour {
 
-	[SerializeField] float spawnDelay = 3.0f;
+	[SerializeField] int spawnDelay = 4;
 	[SerializeField] float rocketSpeed = 5.0f;
-	[SerializeField] ConstantMover spawnTarget;
+	[SerializeField] JumpingMine spawnTarget;
 
-	private float spawnTime = 0;
+    SpriteEffects effects;
+	private int spawnTime = 0;
 
 	// Use this for initialization
 	void Start ()
 	{
-		spawnTime = spawnDelay;
+        effects = GetComponent<SpriteEffects>();
+        BeatManager.Instance.OnBeat += OnBeat;
+		spawnTime = 0;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
 		Transform player = FindObjectOfType<PlayerDancer> ().transform;
-		Vector3 toPlayer = transform.position - player.position;
-		Vector3 rotate = Vector3.RotateTowards (transform.forward, toPlayer, 1, 0);
-		Quaternion rotation = Quaternion.LookRotation (rotate, Vector3.forward);
-		rotation.x = 0;
-		rotation.y = 0;
-		transform.rotation = rotation;
-		if (spawnTime >= spawnDelay)
-		{
-			ConstantMover r = Instantiate (spawnTarget, transform.position, transform.rotation);
-			r.moveSpeed = rocketSpeed;
-			spawnTime = 0;
-		}
-		spawnTime += Time.deltaTime;
+        Vector3 dirvec = player.position - transform.position;
+        float angle = Mathf.Rad2Deg * Mathf.Atan2(dirvec.y, dirvec.x);
+        transform.rotation = Quaternion.Euler(0, 0, angle);
 	}
+
+    void OnBeat()
+    {
+        spawnTime++;
+        if (spawnTime >= spawnDelay)
+        {
+            JumpingMine r = Instantiate(spawnTarget, transform.Find("Muzzle").position, transform.rotation);
+            r.initialDir = transform.right;
+            r.moveSpeed = rocketSpeed;
+            spawnTime = 0;
+            effects.deformX += 0.3f;
+            effects.deformY += 0.3f;
+        }
+    }
 }

@@ -33,7 +33,7 @@ public class SpotLight : MonoBehaviour
         // transform.Translate(0, 0, translation);
         float x_f = moveDir.x * moveSpeed * Time.deltaTime;
         float y_f = moveDir.y * moveSpeed * Time.deltaTime;
-        transform.position = new Vector2(rigidBody.position.x + x_f, rigidBody.position.y + y_f);
+        transform.position = new Vector3(rigidBody.position.x + x_f, rigidBody.position.y + y_f, transform.position.z);
         
         time += Time.deltaTime;
         if (time > 1.0)

@@ -129,8 +129,95 @@
   <event>228,26,explosivezone</event>
   <event>228,28,explosivezone</event>
 
-  <event>228,10,explosivezone</event>
-  <event>228,29,explosivezone</event>
+  <event>240,10,bouncemine</event>
+  <event>240,14,bouncemine</event>
+  <event>240,25,bouncemine</event>
+  <event>240,29,bouncemine</event>
 
+  <event>264,0,jumper</event>
+  <event>264,7,jumper</event>
+  <event>264,2,jumper</event>
+  <event>264,6,jumper</event>
+  <event>264,12,spinringhoriz4</event>
+  <event>264,27,spinringhoriz4</event>
 
+  <event>268,15,spinringvert2</event>
+  <event>268,19,spinringvert2</event>
+
+  <event>276,17,posezone</event>
+  <event>276,22,posezone</event>
+
+  <event>294,10,bouncemine</event>
+  <event>294,29,bouncemine</event>
+  <event>294,0,throwitem</event>
+  <event>296,2,throwitem</event>
+
+  <event>298,3,throwitem</event>
+  <event>300,4,throwitem</event>
+  <event>300,17,spinringhoriz4</event>
+
+  <event>302,5,throwitem</event>
+  <event>304,6,throwitem</event>
+  <event>304,15,spinringvert2</event>
+  <event>304,19,spinringvert2</event>
+
+  <event>306,7,throwitem</event>
+  <event>308,8,throwitem</event>
+  <event>308,20,spinringvert2</event>
+  <event>308,24,spinringvert2</event>
+
+  <event>310,0,throwitem</event>
+  <event>312,2,throwitem</event>
+
+  <event>314,7,throwitem</event>
+  <event>316,8,throwitem</event>
+  <event>316,17,posezone</event>
+  <event>316,22,posezone</event>
+
+  <event>324,10,posezone</event>
+  <event>324,25,posezone</event>
+
+  <event>324,2,throwitem</event>
+  <event>325,3,throwitem</event>
+  <event>326,4,throwitem</event>
+  <event>327,5,throwitem</event>
+  <event>328,2,throwitem</event>
+  <event>329,3,throwitem</event>
+  <event>330,4,throwitem</event>
+  <event>331,5,throwitem</event>
+
+  <event>338,14,posezone</event>
+  <event>338,29,posezone</event>
+
+  <event>338,0,throwitem</event>
+  <event>339,1,throwitem</event>
+  <event>340,9,throwitem</event>
+  <event>341,8,throwitem</event>
+  <event>342,0,throwitem</event>
+  <event>343,1,throwitem</event>
+  <event>344,9,throwitem</event>
+  <event>345,8,throwitem</event>
+
+  <event>348,12,posezone</event>
+  <event>348,17,posezone</event>
+  <event>360,17,spotlight</event>
+  <event>364,7,jumper</event>
+
+  <event>366,0,throwitem</event>
+  <event>368,1,throwitem</event>
+  <event>370,2,throwitem</event>
+  <event>372,3,throwitem</event>
+
+  <event>378,15,explosivezone</event>
+  <event>381,24,explosivezone</event>
+  <event>384,0,jumper</event>
+
+  <event>386,0,throwitem</event>
+  <event>388,1,throwitem</event>
+  <event>390,2,throwitem</event>
+  <event>392,3,throwitem</event>
+
+  <event>398,0,throwitem</event>
+  <event>400,8,throwitem</event>
+  
 </eventList>

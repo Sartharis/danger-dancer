@@ -9,6 +9,7 @@ public class LevelManager : UnitySingleton<LevelManager>
     public Song tutorialSong;
     public bool roundLost = false;
     private bool restarted = false;
+    public bool levelStarted = false;
     [SerializeField] private float levelRestartTime = 2.0f;
 
 	// Use this for initialization
@@ -16,17 +17,28 @@ public class LevelManager : UnitySingleton<LevelManager>
     {
 		roundLost = false;
         restarted = false;
-        if(!GameManager.Instance.didTutorial)
+        StartCoroutine(BeginLevel());
+	}
+
+    IEnumerator BeginLevel()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (!GameManager.Instance.didTutorial)
         {
-            BeatManager.Instance.PlaySong(tutorialSong);
-            ScoreManager.Instance.reduceScore = false;
-            TutorialManager.Instance.StartTutorial();
+            StartTutorial();
         }
         else
         {
             StartLevel();
         }
-	}
+    }
+
+    void StartTutorial()
+    {
+        BeatManager.Instance.PlaySong(tutorialSong);
+        ScoreManager.Instance.reduceScore = false;
+        TutorialManager.Instance.StartTutorial();
+    }
 	
     public void OnTutorialDone()
     {
@@ -39,6 +51,7 @@ public class LevelManager : UnitySingleton<LevelManager>
         BeatManager.Instance.PlaySong(levelSong, GameManager.Instance.CHEATStartBeat);
         ScoreManager.Instance.reduceScore = true;
         SpawnManager.Instance.StartSpawning();
+        levelStarted = true;
     }
 
 	// Update is called once per frame

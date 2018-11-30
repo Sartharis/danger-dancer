@@ -6,10 +6,12 @@ public class UpFloater : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float acceleration;
+    [SerializeField] float upRandomMod;
 
 	// Use this for initialization
-	void Start () {
-		
+	void Start ()
+    {
+	    speed = speed + Random.Range(-upRandomMod,upRandomMod);	
 	}
 	
 	// Update is called once per frame

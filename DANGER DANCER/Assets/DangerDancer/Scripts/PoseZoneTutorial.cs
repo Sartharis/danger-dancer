@@ -7,8 +7,10 @@ public class PoseZoneTutorial : PoseZone
 
     public override void OnPose()
     {
-        GetComponentInChildren<MeshRenderer>().enabled = false;
+        Destroy(transform.GetChild(0).gameObject);
         TutorialManager.Instance.NextPhase();
         base.OnPose();
     }
+
+
 }

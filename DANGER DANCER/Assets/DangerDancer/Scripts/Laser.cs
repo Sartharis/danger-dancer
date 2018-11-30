@@ -31,7 +31,7 @@ public class Laser : MonoBehaviour {
         {
             beatSpeed = 1;
         }
-        cycle =new float[2]{timeOn, timeOff};
+        cycle =new float[2]{timeOff, timeOn};
         BeatManager.Instance.OnBeat += laserCycleUpdate;
 
     }
@@ -62,10 +62,11 @@ public class Laser : MonoBehaviour {
     void LaserUpdate(){
         if (state>=1)
         {
-            laserOff();
-        }else{
             laserOn();
             laserCollide();
+        }else{
+
+            laserOff();
         }
     }
     void laserCollide(){
@@ -77,7 +78,7 @@ public class Laser : MonoBehaviour {
         {
             Collider2D hitCollide = hit.collider;
             PlayerDancer player = hitCollide.GetComponent<PlayerDancer>();
-            if(player!=null){
+            if(player!=null && player.actionState != EActionState.AS_SPIN){
                 player.Fall(new Vector2());
             }
                       
