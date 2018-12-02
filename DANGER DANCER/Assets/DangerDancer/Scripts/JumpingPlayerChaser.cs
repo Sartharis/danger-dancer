@@ -10,12 +10,16 @@ public class JumpingPlayerChaser : MonoBehaviour
     Rigidbody2D rigidBody;
     private PolyNav.PolyNavAgent navAgent; 
     private bool inArena = false;
+    private bool Fallen = false;
+    private TimedDestroy destroyTime;
     private float maxSpeed;
     private float speedModifier;
     private float accelerationModifier;
     private float maxMass;
     private SpriteRenderer spriteRenderer;
     private Animator anim;
+
+
     [SerializeField] private float minMass;
     [SerializeField] private float massReduceRadius;
 
@@ -23,6 +27,7 @@ public class JumpingPlayerChaser : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        destroyTime = GetComponent<TimedDestroy>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         moveDir = GameObject.FindGameObjectsWithTag("Arena")[0].transform.position - transform.position;
         moveDir.Normalize();
@@ -34,23 +39,34 @@ public class JumpingPlayerChaser : MonoBehaviour
         if (inArena)
         {
             anim.enabled = true;
-            Vector3 playerPos = FindObjectOfType<PlayerDancer>().transform.position;
-            navAgent.SetDestination(playerPos);
-            navAgent.maxSpeed = maxSpeed + speedModifier;
-            speedModifier = Mathf.Lerp(speedModifier, 0, 0.01f);
-            if((transform.position - playerPos).magnitude <= massReduceRadius)
-            {
-                navAgent.mass = (1 - ((massReduceRadius - (transform.position - playerPos).magnitude))/massReduceRadius) * (maxMass-minMass) + minMass;
+
+            if (destroyTime.timeLeft<1){
+                anim.SetBool("Fallen", true);
             }
-            else
-            {
-                navAgent.mass = maxMass;
+            else{
+
+                Vector3 playerPos = FindObjectOfType<PlayerDancer>().transform.position;
+                navAgent.SetDestination(playerPos);
+                navAgent.maxSpeed = maxSpeed + speedModifier;
+                speedModifier = Mathf.Lerp(speedModifier, 0, 0.01f);
+                if ((transform.position - playerPos).magnitude <= massReduceRadius)
+                {
+                    navAgent.mass = (1 - ((massReduceRadius - (transform.position - playerPos).magnitude)) / massReduceRadius) * (maxMass - minMass) + minMass;
+                }
+                else
+                {
+                    navAgent.mass = maxMass;
+                }
+                if ((playerPos - transform.position).x < 0)
+                {
+                    spriteRenderer.flipX = true;
+                }
+                else
+                {
+                    spriteRenderer.flipX = false;
+                }
             }
-            if(( playerPos- transform.position).x < 0){
-                spriteRenderer.flipX = true;
-            }else{
-                spriteRenderer.flipX = false;
-            }
+
         }
         else
         {
