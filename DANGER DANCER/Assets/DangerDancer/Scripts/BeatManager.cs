@@ -77,6 +77,10 @@ public class BeatManager : UnitySingleton<BeatManager>
                 {
                     PlaySong(currentSong);
                 }
+                else
+                {
+                    LevelManager.Instance.roundWin = true;
+                }
             }
         }
     }

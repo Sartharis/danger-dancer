@@ -8,6 +8,7 @@ public class LevelManager : UnitySingleton<LevelManager>
     public Song levelSong;
     public Song tutorialSong;
     public bool roundLost = false;
+    public bool roundWin = false;
     private bool restarted = false;
     public bool levelStarted = false;
     [SerializeField] private float levelRestartTime = 2.0f;
@@ -71,8 +72,13 @@ public class LevelManager : UnitySingleton<LevelManager>
             {
                 restarted = true;
                 roundLost = false;
-                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
+        }
+
+        if(roundWin)
+        {
+
         }
 	}
 
