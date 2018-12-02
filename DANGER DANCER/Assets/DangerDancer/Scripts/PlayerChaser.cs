@@ -19,12 +19,14 @@ public class PlayerChaser : MonoBehaviour
         navAgent.SetDestination(FindObjectOfType<PlayerDancer>().transform.position);
         maxSpeed = navAgent.maxSpeed + Random.Range(-0.1f,0);
         maxMass = navAgent.mass;
-	}
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+    }
 	
 	void Update ()
     {
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         Vector3 playerPos = FindObjectOfType<PlayerDancer>().transform.position;
-		navAgent.SetDestination(playerPos);
+        navAgent.SetDestination(playerPos);
         navAgent.maxSpeed = maxSpeed + speedModifier;
         speedModifier = Mathf.Lerp(speedModifier, 0, 0.01f);
         if((transform.position - playerPos).magnitude <= massReduceRadius)
@@ -35,7 +37,7 @@ public class PlayerChaser : MonoBehaviour
         {
             navAgent.mass = maxMass;
         }
-	}
+    }
 
     public void ModifySpeed(float speedModifier)
     {

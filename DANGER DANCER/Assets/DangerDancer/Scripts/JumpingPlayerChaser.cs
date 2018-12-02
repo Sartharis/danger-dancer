@@ -14,16 +14,18 @@ public class JumpingPlayerChaser : MonoBehaviour
     private float speedModifier;
     private float accelerationModifier;
     private float maxMass;
+    private SpriteRenderer spriteRenderer;
+    private Animator anim;
     [SerializeField] private float minMass;
     [SerializeField] private float massReduceRadius;
 
 	void Start ()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         moveDir = GameObject.FindGameObjectsWithTag("Arena")[0].transform.position - transform.position;
         moveDir.Normalize();
-        var angle = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
-        transform.Rotate (0,0,angle-90);
         
 	}
 	
@@ -31,6 +33,7 @@ public class JumpingPlayerChaser : MonoBehaviour
     {
         if (inArena)
         {
+            anim.enabled = true;
             Vector3 playerPos = FindObjectOfType<PlayerDancer>().transform.position;
             navAgent.SetDestination(playerPos);
             navAgent.maxSpeed = maxSpeed + speedModifier;
@@ -43,13 +46,20 @@ public class JumpingPlayerChaser : MonoBehaviour
             {
                 navAgent.mass = maxMass;
             }
+            if(( playerPos- transform.position).x < 0){
+                spriteRenderer.flipX = true;
+            }else{
+                spriteRenderer.flipX = false;
+            }
         }
         else
         {
+            anim.enabled = false;
             float x_f = moveDir.x * initSpeed * Time.deltaTime;
             float y_f = moveDir.y * initSpeed * Time.deltaTime;
             transform.position = new Vector2(rigidBody.position.x + x_f, rigidBody.position.y + y_f);
         }
+
 	}
 
     public void ModifySpeed(float speedModifier)
