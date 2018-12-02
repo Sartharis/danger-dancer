@@ -54,7 +54,7 @@ public class BeatManager : UnitySingleton<BeatManager>
         songPlayer.Play(0);
         playingSong = true;
         songPlayer.time = startBeat * currentTimePerBeat;
-        timeLeft = song.duration;
+        timeLeft = song.duration - songPlayer.time;
         loop = song.loop;
         currentBeat = startBeat;
     }

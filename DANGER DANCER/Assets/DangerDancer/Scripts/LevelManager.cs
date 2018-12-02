@@ -78,7 +78,7 @@ public class LevelManager : UnitySingleton<LevelManager>
 
         if(roundWin)
         {
-
+            SceneManager.LoadScene("LevelComplete");
         }
 	}
 
