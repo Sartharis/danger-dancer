@@ -6,7 +6,7 @@ using UnityEngine;
 public class SpawnManager : UnitySingleton<SpawnManager>
 {
 
-	[SerializeField] Transform[] spawnPositions;
+	[SerializeField] public Transform[] spawnPositions;
 	[SerializeField] public List<SpawnEvent> spawnList;
     [SerializeField] DelayedSpawner delayedSpawner;
     [SerializeField] public int numDelay = 2;

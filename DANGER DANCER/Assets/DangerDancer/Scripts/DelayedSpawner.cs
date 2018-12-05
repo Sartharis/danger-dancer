@@ -31,9 +31,17 @@ public class DelayedSpawner : MonoBehaviour {
         if (beats <= 0)
         {
             BeatManager.Instance.OnBeat -= OnBeat;
-            if (objectToSpawn){
-                GameObject o = Instantiate(objectToSpawn);
-                o.transform.position = transform.position;
+            if (objectToSpawn)
+            {
+                if (isBad)
+                {
+                    NodeCost.Instance.updateCost(transform, 1000000);
+                }
+                else
+                {
+                    TargetCell.Instance.AddTarget(transform);
+                }
+                Instantiate(objectToSpawn, transform.position, Quaternion.identity);
             }
             Destroy(gameObject);
         }
