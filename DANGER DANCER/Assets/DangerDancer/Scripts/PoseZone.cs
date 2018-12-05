@@ -9,6 +9,7 @@ public class PoseZone : MonoBehaviour
     [SerializeField] private float acceleration = -2000f;
     bool pose = false;
     private SpriteEffects effects;
+    float time = 0.0f;
 
     private void Start()
     {
@@ -28,6 +29,7 @@ public class PoseZone : MonoBehaviour
     {
          CameraShake.Instance.ShakeCamera(0.6f,0.05f);
         ScoreManager.Instance.AddScore(20, "Pose Zone", transform.position);
+        AudioManager.Instance.PlayAudio(AudioManager.Instance.poseSound);
         pose = true;
         effects.rippleDeformX = -0.1f;
         effects.rippleDeformY = -0.1f;
@@ -35,6 +37,7 @@ public class PoseZone : MonoBehaviour
 
     public void Update()
     {
+        time += Time.deltaTime;
         if (pose == true){
             transform.Rotate(new Vector3(0f, 0f, spinSpeed * Time.deltaTime));
             spinSpeed += acceleration * Time.deltaTime;
