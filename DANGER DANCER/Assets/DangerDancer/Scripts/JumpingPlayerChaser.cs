@@ -39,8 +39,8 @@ public class JumpingPlayerChaser : MonoBehaviour
         if (inArena)
         {
             anim.enabled = true;
-
-            if (destroyTime.timeLeft<.75){
+            anim.speed = 1.5f * navAgent.currentSpeed / maxSpeed;
+            if (destroyTime.timeLeft<4){
                 anim.SetBool("Fallen", true);
                 rigidBody.velocity = navAgent.currentSpeed*navAgent.movingDirection;
                 navAgent.enabled = false;

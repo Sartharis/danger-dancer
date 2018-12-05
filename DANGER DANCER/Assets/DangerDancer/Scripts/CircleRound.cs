@@ -14,6 +14,7 @@ public class CircleRound : MonoBehaviour {
     public bool activated=true;
     SpriteRenderer sprite;
     float startAngle; 
+    private Vector3 rotate;
 
     // Use this for initialization
     void Start () {
@@ -23,7 +24,7 @@ public class CircleRound : MonoBehaviour {
 
         Transform player = FindObjectOfType<PlayerDancer>().transform;
         Vector3 toPlayer = transform.position - player.position;
-        Vector3 rotate = Vector3.RotateTowards(transform.forward, toPlayer, 1, 0);
+        rotate = Vector3.RotateTowards(transform.forward, toPlayer, 1, 0);
         Quaternion rotation = Quaternion.LookRotation(rotate, Vector3.forward);
         rotation.x = 0;
         rotation.y = 0;
@@ -56,10 +57,13 @@ public class CircleRound : MonoBehaviour {
         playerPos = playerPos - transform.position;
         if (activated){
             checkAngle();
+            Quaternion rotation = Quaternion.LookRotation(rotate, Vector3.forward);
+            rotation.x = 0;
+            rotation.y = 0;
+            transform.rotation = rotation;
 
-            
 
-            if( fullCircle )
+            if ( fullCircle )
             {
                 sprite.sprite = angle < 0 ? flipped : unflipped;
                 sprite.material.SetFloat ("_Cutoff", ((Mathf.Abs(angle))/ 360f));
@@ -71,7 +75,7 @@ public class CircleRound : MonoBehaviour {
             }
             
         }else{
-            Destroy(gameObject, destroyTime);
+            Destroy(transform.parent.gameObject, destroyTime);
         }
 
 

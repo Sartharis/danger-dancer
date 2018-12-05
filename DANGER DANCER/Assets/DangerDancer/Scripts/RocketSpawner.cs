@@ -41,4 +41,9 @@ public class RocketSpawner : MonoBehaviour {
             effects.deformY += 0.3f;
         }
     }
+
+    private void OnDestroy()
+    {
+        BeatManager.Instance.OnBeat -= OnBeat;
+    }
 }

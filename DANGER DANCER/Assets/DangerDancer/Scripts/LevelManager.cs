@@ -5,12 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : UnitySingleton<LevelManager>
 {
+    public int levelIndex;
     public Song levelSong;
+    public Song winSong;
+    public Song loseSong;
     public Song tutorialSong;
+    public dialogue startDialogue;
     public bool roundLost = false;
     public bool roundWin = false;
     private bool restarted = false;
     public bool levelStarted = false;
+    private bool startedMusic = false;
     [SerializeField] private float levelRestartTime = 2.0f;
 
 	// Use this for initialization
@@ -24,7 +29,44 @@ public class LevelManager : UnitySingleton<LevelManager>
     IEnumerator BeginLevel()
     {
         yield return new WaitForSeconds(0.5f);
+        bool seenDialogue = false;
+        if(!GameManager.Instance.skipDialogue && (!GameManager.Instance.sawDialogue.TryGetValue(levelIndex, out seenDialogue) || !seenDialogue))
+        {
+            StartDialogue();
+            GameManager.Instance.sawDialogue.Add(levelIndex, true);
+        }
+        else if (!GameManager.Instance.didTutorial)
+        {
+            StartTutorial();
+        }
+        else
+        {
+            StartLevel();
+        }
+    }
+
+    public void FinishDialogue()
+    {
         if (!GameManager.Instance.didTutorial)
+        {
+            StartTutorial();
+        }
+        else
+        {
+            StartLevel();
+        }
+    }
+
+    void StartDialogue()
+    {
+        if(startDialogue)
+        {
+            BeatManager.Instance.PlaySong(tutorialSong);
+            ScoreManager.Instance.reduceScore = false;
+            startedMusic = true;
+            startDialogue.StartDialogue();
+        }
+        else if (!GameManager.Instance.didTutorial)
         {
             StartTutorial();
         }
@@ -36,7 +78,11 @@ public class LevelManager : UnitySingleton<LevelManager>
 
     void StartTutorial()
     {
-        BeatManager.Instance.PlaySong(tutorialSong);
+        if(!startedMusic)
+        {
+            startedMusic = true;
+            BeatManager.Instance.PlaySong(tutorialSong);
+        }
         ScoreManager.Instance.reduceScore = false;
         TutorialManager.Instance.StartTutorial();
     }
@@ -68,7 +114,7 @@ public class LevelManager : UnitySingleton<LevelManager>
         if(roundLost && !restarted)
         {
             levelRestartTime -= Time.deltaTime;
-            if(levelRestartTime < 0)
+            if(levelRestartTime < 0 && Input.anyKey)
             {
                 restarted = true;
                 roundLost = false;
@@ -76,19 +122,33 @@ public class LevelManager : UnitySingleton<LevelManager>
             }
         }
 
-        if(roundWin)
-        {
-            SceneManager.LoadScene("LevelComplete");
-        }
+        
 	}
 
     public void LoseRound()
     {
-        roundLost = true;
+        if(!roundLost)
+        {
+            BeatManager.Instance.PlaySong(loseSong, 0);
+            roundLost = true;
+            SpawnManager.Instance.StopSpawning();
+        }
     }
 
-    public void WinRound()
+    public void Win()
     {
+        if (!roundWin)
+        {
+            StartCoroutine(WinRound());
+            roundWin = true;
+        }
+    }
 
+    IEnumerator WinRound()
+    {
+        ScoreManager.Instance.reduceScore = false;
+        BeatManager.Instance.PlaySong(winSong, 0);
+        yield return new WaitForSeconds(6.5f);
+        SceneManager.LoadScene("LevelComplete");
     }
 }

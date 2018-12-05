@@ -19,6 +19,11 @@ public class ColorBeatModify : MonoBehaviour {
 		
 	}
 
+    private void OnDestroy()
+    {
+        BeatManager.Instance.OnBeat -= OnBeat;
+    }
+
     void OnBeat()
     {
         //if(LevelManager.Instance.levelStarted)

@@ -24,6 +24,11 @@ public class SpawnManager : UnitySingleton<SpawnManager>
         spawnIndex = 0;
 		BeatManager.Instance.OnBeat += incrementBeat;
 	}
+
+    public void StopSpawning ()
+    {
+        BeatManager.Instance.OnBeat -= incrementBeat;
+    }
 	
 	// Update is called once per frame
 	void Update ()

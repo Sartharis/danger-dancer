@@ -7,7 +7,7 @@ using System.IO;
 using System.Xml.Linq;
 using System;
 using System.Text.RegularExpressions;
-public class XMLDeserializer : UnitySingletonPersistent<XMLDeserializer> {
+public class XMLDeserializer : UnitySingleton<XMLDeserializer> {
     XDocument xmlDoc;
     IEnumerable<XElement> items;
     List<SpawnEvent> spawnEvents = new List<SpawnEvent>();

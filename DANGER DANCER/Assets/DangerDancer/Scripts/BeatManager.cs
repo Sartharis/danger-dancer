@@ -29,6 +29,7 @@ public class BeatManager : UnitySingleton<BeatManager>
 
     void Start()
     {
+        beatMissGraceTime = 0.22f;
         beatTimer = 0;
         playingSong = false;
         songPlayer = gameObject.AddComponent(typeof(AudioSource)) as AudioSource;
@@ -54,7 +55,7 @@ public class BeatManager : UnitySingleton<BeatManager>
         songPlayer.Play(0);
         playingSong = true;
         songPlayer.time = startBeat * currentTimePerBeat;
-        timeLeft = song.duration - songPlayer.time;
+        timeLeft = song.duration - startBeat * currentTimePerBeat;
         loop = song.loop;
         currentBeat = startBeat;
     }
@@ -79,7 +80,7 @@ public class BeatManager : UnitySingleton<BeatManager>
                 }
                 else
                 {
-                    LevelManager.Instance.roundWin = true;
+                    LevelManager.Instance.Win();
                 }
             }
         }

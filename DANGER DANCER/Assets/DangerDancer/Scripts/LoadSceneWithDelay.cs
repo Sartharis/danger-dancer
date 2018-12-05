@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadSceneWithDelay : MonoBehaviour {
-  public float delay = 5;
+  public float delay = 1;
+  private bool canSkip = false;
   public int sceneIndex;
 	// Use this for initialization
 	void Start () {
@@ -12,12 +13,17 @@ public class LoadSceneWithDelay : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
+        if (Input.anyKey && canSkip)
+        {
+            SceneManager.LoadScene(sceneIndex);
+        }
+    }
+
   IEnumerator LoadLevelAfterDelay(float delay, int sceneIndex)
      {
          yield return new WaitForSeconds(delay);
-         SceneManager.LoadScene(sceneIndex);
+         canSkip = true;
      }
 }

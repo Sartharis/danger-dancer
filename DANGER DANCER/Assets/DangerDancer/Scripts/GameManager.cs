@@ -5,6 +5,13 @@ using UnityEngine;
 public class GameManager : UnitySingletonPersistent<GameManager>
 {
     public bool didTutorial = false;
+    public bool skipDialogue = false;
     public int CHEATStartBeat = 0;
     public bool CHEATNoReduceScore = false;
+    public Dictionary<int,bool> sawDialogue;
+
+    private void Start()
+    {
+        sawDialogue = new Dictionary<int, bool>();
+    }
 }

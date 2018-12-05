@@ -25,6 +25,7 @@ public class PlayerDancer : MonoBehaviour
     [SerializeField] private LayerMask wallMask;
 
     [Header("Sound")]
+    [SerializeField] private AudioClip beatHitSound;
     [SerializeField] private AudioClip beatMissSound;
     [SerializeField] private AudioClip[] crowdSadSounds;
 
@@ -210,6 +211,10 @@ public class PlayerDancer : MonoBehaviour
                             if (fallTicks > 1) bodyshaker.shake += 0.1f;
                             fallTicks -= 1;
                         }
+                        else
+                        {
+                             audioPlayer.PlayOneShot(beatHitSound);
+                        }
                     }
 
                 }
@@ -342,6 +347,7 @@ public class PlayerDancer : MonoBehaviour
         anim.SetBool("Fallen", isFallen());
         anim.SetBool("Running", isRunning());
         anim.SetBool("Moving", isMoving());
+         anim.SetBool("Posing", actionState == EActionState.AS_POSE && !isFallen());
     }
 
 

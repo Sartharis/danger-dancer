@@ -19,6 +19,7 @@ public class CircleRoundTutorial : MonoBehaviour {
 		if(!c.activated && !complete)
         {
             complete = true;
+            Destroy(transform.GetChild(0).gameObject);
             Destroy(transform.GetChild(1).gameObject);
             TutorialManager.Instance.NextPhase();
         }

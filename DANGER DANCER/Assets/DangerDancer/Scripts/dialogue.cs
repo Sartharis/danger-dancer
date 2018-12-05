@@ -14,37 +14,54 @@ public class dialogue : MonoBehaviour {
   private int idx = 0;
   public float moveSpeed=1.5f;
   public float timedelay = 1.0f;
+    private float initialtimedelay;
+    private bool started = false;
    
 	void Start () {
+        initialtimedelay = timedelay;
     // targetPos = new Vector3(9.5f,-6.5f,0.0f);
     // Debug.Log(targetPos);
     sprites = gameObject.transform.Cast<Transform>().ToList();
 		// Dialogue();
 	}
+
+    public void StartDialogue()
+    {
+        started = true;
+    }
 	
 	// Update is called once per frame
-	void Update () {
-    // Debug.Log(sprites[idx].position.x);
-    if (idx < sprites.Count && idx % 2 == 0 && sprites[idx].position.x > 15.0f)
+	void Update ()
     {
-      sprites[idx].position = new Vector3(sprites[idx].position.x - moveSpeed, sprites[idx].position.y, sprites[idx].position.z);
+    if(started)
+        {
+
+            if (idx < sprites.Count && idx % 2 == 0 && sprites[idx].position.x > 15.0f)
+            {
+                sprites[idx].position = new Vector3(sprites[idx].position.x - moveSpeed, sprites[idx].position.y, sprites[idx].position.z);
+            }
+            else if (idx < sprites.Count && idx % 2 == 1 && sprites[idx].position.x < 15.0f)
+            {
+                sprites[idx].position = new Vector3(sprites[idx].position.x + moveSpeed, sprites[idx].position.y, sprites[idx].position.z);
+            }
+            else if (timedelay > 0)
+            {
+                timedelay -= Time.deltaTime;
+            }
+            else if(idx < sprites.Count )
+            {
+                timedelay = initialtimedelay;
+                sprites[idx].GetComponent<SpriteRenderer>().enabled = false;
+                idx++;
+                if(idx >= sprites.Count)
+                {
+                    LevelManager.Instance.FinishDialogue();
+                    Destroy(gameObject);
+                }
+            }
+        }
+
     }
-    else if (idx < sprites.Count && idx % 2 == 1 && sprites[idx].position.x < 15.0f)
-    {
-      sprites[idx].position = new Vector3(sprites[idx].position.x + moveSpeed, sprites[idx].position.y, sprites[idx].position.z);
-    }
-    else if (timedelay > 0)
-    {
-      timedelay -= Time.deltaTime;
-    }
-    else
-    {
-      timedelay = 1.0f;
-      sprites[idx].GetComponent<SpriteRenderer>().enabled = false;
-      idx ++;
-    }
-		
-	}
 
   void Dialogue (){
     // for(int i = 0; i < spriteRenders.Count; ++i)
@@ -57,12 +74,10 @@ public class dialogue : MonoBehaviour {
     {
       if (count % 2 == 0)
       {
-        Debug.Log(child.position);
         child.position = new Vector3(15.0f,-17.3f,-5.0f);
       }
       count ++;
       //child is your child transform
-      Debug.Log("hi");
     }
   }
 }

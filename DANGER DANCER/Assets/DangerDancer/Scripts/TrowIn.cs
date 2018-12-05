@@ -5,7 +5,7 @@ using UnityEngine;
 public class TrowIn : MonoBehaviour {
 
   public string type;
-  private float moveSpeed = 7;
+  private float moveSpeed = 5;
   private Vector2 moveDir;
   private Vector3 targetPos;
   Rigidbody2D rigidBody;

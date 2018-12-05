@@ -34,7 +34,7 @@ public class ChainPoseZone : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         PlayerDancer player = collision.GetComponent<PlayerDancer>();
-        if (player && player.actionState == EActionState.AS_POSE && !pose)
+        if (player && (player.actionState == EActionState.AS_POSE || player.actionState == EActionState.AS_IDLE) && !pose)
         {
             OnPose();
         }
