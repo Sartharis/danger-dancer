@@ -36,7 +36,7 @@ public class CircleRound : MonoBehaviour {
     void checkAngle(){
         angle = Vector2.SignedAngle(new Vector2(playerPos.x, playerPos.y), new Vector2(playerStart.x, playerStart.y) );
         float deltaAngle = angle - prevAngle;
-        if(Mathf.Abs(deltaAngle)>350){
+        if(Mathf.Abs(deltaAngle)>330){
             fullCircle = !fullCircle;
         }
         if(fullCircle && Mathf.Abs(angle)<=5){
@@ -44,6 +44,7 @@ public class CircleRound : MonoBehaviour {
             activated = false;
         }
         prevAngle = angle;
+        Debug.Log(angle);
     }
 	// Update is called once per frame
 	void Update () {
@@ -61,7 +62,6 @@ public class CircleRound : MonoBehaviour {
             rotation.x = 0;
             rotation.y = 0;
             transform.rotation = rotation;
-
 
             if ( fullCircle )
             {

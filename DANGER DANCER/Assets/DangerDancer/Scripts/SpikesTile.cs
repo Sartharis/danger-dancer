@@ -6,7 +6,7 @@ public class SpikesTile : MonoBehaviour
 {
 
 	[SerializeField] int spikeDelay = 2;
-	[SerializeField] int spikeReset = 5;
+	[SerializeField] int spikeReset = 3;
 	[SerializeField] Sprite inactiveSprite;
 	[SerializeField] Sprite warningSprite;
 	[SerializeField] Sprite activeSprite;

@@ -53,14 +53,14 @@
   <event>128,20,circleround</event>
   <event>128,32,circleround</event>
 
-  <event>142,0,laserdown</event>
-  <event>142,2,laserdown</event>
-  <event>142,16,trapdoordoubletime</event>
-  <event>142,21,trapdoordoubletime</event>
-  <event>142,17,trapdoordoubletime</event>
-  <event>142,22,trapdoordoubletime</event>
-  <event>142,18,trapdoordoubletime</event>
-  <event>142,23,trapdoordoubletime</event>
+  <event>140,0,laserdown</event>
+  <event>140,2,laserdown</event>
+  <event>140,16,trapdoordoubletime</event>
+  <event>140,21,trapdoordoubletime</event>
+  <event>140,17,trapdoordoubletime</event>
+  <event>140,22,trapdoordoubletime</event>
+  <event>140,18,trapdoordoubletime</event>
+  <event>140,23,trapdoordoubletime</event>
 
   <event>144,21,spinringvert2</event>
   <event>144,26,spinringvert2</event>
@@ -73,10 +73,61 @@
   <event>156,26,spinringvert2</event>
   <event>156,18,spinringvert2</event>
   <event>156,23,spinringvert2</event>
-
-  <event>176,10,rocketspawner</event>
-  <event>176,14,rocketspawner</event>
-  <event>176,17,chainpose</event>
+  
+  <event>172,34,rocketspawner</event>
+  <event>172,35,rocketspawner</event>
+  <event>176,27,chainpose</event>
   <event>176,22,chainpose</event>
+
+  <event>188,25,spinringhoriz4</event>
+  <event>188,29,spinringhoriz4</event>
+
+  <event>196,20,spinringhoriz4</event>
+  <event>196,24,spinringhoriz4</event>
+  <event>202,8,laserdown</event>
+
+  <event>204,24,chainpose</event>
+  <event>212,29,posezone</event>
+  <event>220,20,chainpose</event>
+  <event>228,25,posezone</event>
+
+  <event>234,25,flamethrowers</event>
+  <event>240,17,posezone</event>
+  <event>240,22,posezone</event>
+  <event>248,12,spinringhoriz4</event>
+  <event>248,27,spinringhoriz4</event>
+  <event>250,8,laserdown</event>
+  <event>266,0,laserdown</event>
+  <event>266,2,laserdown</event>
+  <event>264,16,posezone</event>
+  <event>264,18,posezone</event>
+  <event>272,31,spinringvert2</event>
+  <event>272,32,spinringvert2</event>
+
+  <event>284,17,chainpose</event>
+  <event>288,22,chainpose</event>
+
+  <event>300,34,rocketspawner</event>
+  <event>300,35,rocketspawner</event>
+
+  <event>304,24,spinringvert2</event>
+  <event>308,12,spinringhoriz2</event>
+  <event>312,20,spinringvert2</event>
+  <event>316,18,spinringhoriz2</event>
+  <event>320,25,spinringvert2</event>
+  <event>324,17,spinringhoriz2</event>
+  <event>328,25,spinringvert2</event>
+  <event>332,13,spinringhoriz2</event>
+  <event>336,15,spinringvert2</event>
+
+  <event>344,12,trapdoor</event>
+  <event>344,17,trapdoor</event>
+  <event>344,22,trapdoor</event>
+  <event>344,27,trapdoor</event>
+  
+  <event>344,16,chainpose</event>
+  <event>352,18,chainpose</event>
+  <event>356,24,spinringvert2</event>
+  <event>360,12,spinringhoriz2</event>
   
 </eventList>

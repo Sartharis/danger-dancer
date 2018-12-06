@@ -14,11 +14,13 @@ public class ChainPoseZoneTutorial : ChainPoseZone
             {
                 TutorialManager.Instance.NextPhase();
                 ScoreManager.Instance.AddScore(10, "Chained Pose Zone", transform.position);
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.poseSound);
                 Destroy(transform.parent.gameObject);
             }
             else
             {
                 ScoreManager.Instance.AddScore(5, "Chained Pose Zone", transform.position);
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.ringSound);
                 targetPoint = transform.position + offset;
                 int mask = LayerMask.GetMask("Wall");
                 int randomint = Random.Range(0, 3);

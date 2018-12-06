@@ -50,11 +50,13 @@ public class ChainPoseZone : MonoBehaviour
             if (chainLeftToCreate == 1)
             {
                 ScoreManager.Instance.AddScore(15, "Chained Pose Zone", transform.position);
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.poseSound);
                 Destroy(gameObject);
             }
             else
             {
                 ScoreManager.Instance.AddScore(10, "Chained Pose Zone", transform.position);
+                AudioManager.Instance.PlayAudio(AudioManager.Instance.ringSound);
                 targetPoint = transform.position + offset;
                 int mask = LayerMask.GetMask("Wall");
                 int randomint = Random.Range(0, 3);
