@@ -7,14 +7,17 @@ public class RocketSpawner : MonoBehaviour {
 	[SerializeField] int spawnDelay = 4;
 	[SerializeField] float rocketSpeed = 5.0f;
 	[SerializeField] JumpingMine spawnTarget;
+    [SerializeField] AudioClip fire;
+
 
     SpriteEffects effects;
 	private int spawnTime = 0;
-
+    private AudioSource source;
 	// Use this for initialization
 	void Start ()
 	{
         effects = GetComponent<SpriteEffects>();
+        source = GetComponent<AudioSource>();
         BeatManager.Instance.OnBeat += OnBeat;
 		spawnTime = 0;
 	}
@@ -33,6 +36,7 @@ public class RocketSpawner : MonoBehaviour {
         spawnTime++;
         if (spawnTime >= spawnDelay)
         {
+            source.PlayOneShot(fire);
             JumpingMine r = Instantiate(spawnTarget, transform.Find("Muzzle").position, transform.rotation);
             r.initialDir = transform.right;
             r.moveSpeed = rocketSpeed;

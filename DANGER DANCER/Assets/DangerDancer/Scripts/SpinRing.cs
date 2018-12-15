@@ -35,7 +35,7 @@ public class SpinRing : MonoBehaviour
         {
             AudioManager.Instance.PlayAudio(AudioManager.Instance.ringSound);
             CameraShake.Instance.ShakeCamera(0.2f,0.05f);
-            ScoreManager.Instance.AddScore(10, "Spin Ring", transform.position);
+            ScoreManager.Instance.AddScore(5, "Spin Ring", transform.position);
             spin = true;
         }
 

@@ -12,6 +12,7 @@ public class Laser : MonoBehaviour {
     LineRenderer laserRenderer;
     Vector2 laserOrigin;
     Vector2 laserDirection;
+    AudioSource audioSource;
 
     [SerializeField] int timeOn;
     [SerializeField] int timeOff;
@@ -21,6 +22,7 @@ public class Laser : MonoBehaviour {
     [SerializeField]  int state;
 
     void Start () {
+        audioSource =  GetComponent<AudioSource>();
         laserCollider = GetComponent<BoxCollider2D>();
         laserRenderer = GetComponent<LineRenderer>();
         laserOrigin =transform.position;
@@ -39,6 +41,7 @@ public class Laser : MonoBehaviour {
 
     public void laserOn(){
         laserRenderer.enabled = true;
+        if(!audioSource.isPlaying) audioSource.Play();
     }
 
 
@@ -46,6 +49,7 @@ public class Laser : MonoBehaviour {
     public void laserOff()
     {
         laserRenderer.enabled = false;
+        audioSource.Stop();
     }
     public void setLaserDirection(Vector2 newDirection){
         laserDirection = newDirection;

@@ -40,7 +40,7 @@ public class SpotLight : MonoBehaviour
         {
             if (inLight)
             {
-                ScoreManager.Instance.AddScore(10, "Spotlight", transform.position);
+                ScoreManager.Instance.AddScore(15, "Spotlight", transform.position);
             }
             else
             {

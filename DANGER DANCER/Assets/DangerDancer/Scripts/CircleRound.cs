@@ -40,7 +40,7 @@ public class CircleRound : MonoBehaviour {
             fullCircle = !fullCircle;
         }
         if(fullCircle && Mathf.Abs(angle)<=5){
-            ScoreManager.Instance.AddScore(20, "Circle Round", transform.position);
+            ScoreManager.Instance.AddScore(40, "Circle Round", transform.position);
             activated = false;
         }
         prevAngle = angle;

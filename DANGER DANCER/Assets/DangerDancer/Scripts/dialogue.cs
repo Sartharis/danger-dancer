@@ -44,11 +44,13 @@ public class dialogue : MonoBehaviour {
             {
                 sprites[idx].position = new Vector3(sprites[idx].position.x + moveSpeed, sprites[idx].position.y, sprites[idx].position.z);
             }
-            else if (timedelay > 0)
+
+            if (timedelay > 0)
             {
                 timedelay -= Time.deltaTime;
             }
-            else if(idx < sprites.Count )
+
+            if (idx < sprites.Count && (timedelay <= 0 || (timedelay < initialtimedelay - 0.2f && Input.GetButtonDown("Fire1"))))
             {
                 timedelay = initialtimedelay;
                 sprites[idx].GetComponent<SpriteRenderer>().enabled = false;
@@ -59,6 +61,7 @@ public class dialogue : MonoBehaviour {
                     Destroy(gameObject);
                 }
             }
+
         }
 
     }

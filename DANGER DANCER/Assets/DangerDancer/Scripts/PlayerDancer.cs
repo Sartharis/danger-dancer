@@ -27,6 +27,7 @@ public class PlayerDancer : MonoBehaviour
     [Header("Sound")]
     [SerializeField] private AudioClip beatHitSound;
     [SerializeField] private AudioClip beatMissSound;
+     [SerializeField] private AudioClip fallSound;
     [SerializeField] private AudioClip[] crowdSadSounds;
 
     [Header("Beat")]
@@ -55,10 +56,13 @@ public class PlayerDancer : MonoBehaviour
 	private SpriteRenderer bodysprite;
     private SpriteRenderer headsprite;
     private AudioSource audioPlayer;
+    private Vector3 offset;
+    private Vector3 startpoint;
 
 
     private void Awake()
     {
+        startpoint = transform.position;
         body = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         audioPlayer = GetComponent<AudioSource>();
@@ -135,6 +139,7 @@ public class PlayerDancer : MonoBehaviour
     {
 		if (!isFallen() && invulnerableTimer <= 0.0f)
         {
+            audioPlayer.PlayOneShot(fallSound);
             fallTicks = 1;
             ScoreManager.Instance.AddScore(-15, "Oh no", transform.position);
              CameraShake.Instance.ShakeCamera(1f, 0.05f);
@@ -246,11 +251,13 @@ public class PlayerDancer : MonoBehaviour
     {
         if (CanDoAction())
         {
+            //Debug.Log(transform.position);
             actionStartPoint = transform.position;
+            actionEndPoint = transform.position;
             actionState = EActionState.AS_POSE;
             actionTimer = poseDuration;
             bodyshaker.shake += 0.1f;
-            GhostRecorder.Instance.addAction(BeatManager.Instance.getCurrentBeat(), new Vector2(0, 0), "POSE");
+           // GhostRecorder.Instance.addAction(BeatManager.Instance.getCurrentBeat(), new Vector2(0, 0), "POSE");
             PlayActionAnim();
         }
     }
@@ -269,7 +276,7 @@ public class PlayerDancer : MonoBehaviour
                 float dir_y = Mathf.Sin(yaw);
                 moveDir = new Vector2(dir_x,dir_y);
             }
-
+            moveDir.Normalize();
             actionStartPoint = transform.position;
             actionEndPoint = transform.position + (Vector3)moveDir * spinDistance;
             actionState = EActionState.AS_SPIN;
@@ -317,6 +324,7 @@ public class PlayerDancer : MonoBehaviour
 
             if (actionTimer <= 0.0f)
             {
+                transform.position = actionEndPoint;
                 actionState = EActionState.AS_IDLE;
             }
 
@@ -328,11 +336,10 @@ public class PlayerDancer : MonoBehaviour
             }
             else if (actionState == EActionState.AS_SPIN)
             {           
+                Debug.Log(spinCurve.Evaluate(1 - (actionTimer / spinDuration)));
                 Vector3 spinPoint = actionStartPoint + (actionEndPoint - actionStartPoint) * spinCurve.Evaluate(1 - (actionTimer / spinDuration));
-                body.MovePosition(spinPoint);
-               // transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Mathf.LerpAngle(transform.rotation.eulerAngles.z,
-               //                                 actionTimer * 360 * 4,
-               //                                 0.2f)));
+                //body.MovePosition(spinPoint);
+                transform.position = spinPoint;
             }
         }
     }

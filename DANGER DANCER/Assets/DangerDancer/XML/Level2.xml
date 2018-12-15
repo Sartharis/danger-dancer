@@ -21,6 +21,7 @@
   <event>70,22,spinringhoriz4</event>
   <event>78,26,circleround</event>
   <event>86,29,circleround</event>
+  <event>90,27,chainpose</event>
   <event>96,11,bouncemine</event>
   <event>96,13,bouncemine</event>
   <event>96,22,spinringhoriz4</event>
@@ -50,8 +51,9 @@
   <event>128,23,trapdoor</event>
   <event>128,24,trapdoor</event>
 
-  <event>128,20,circleround</event>
-  <event>128,32,circleround</event>
+  <event>128,21,circleround</event>
+  <event>128,22,spinringvert4</event>
+  <event>128,24,circleround</event>
 
   <event>140,0,laserdown</event>
   <event>140,2,laserdown</event>
@@ -116,15 +118,19 @@
   <event>316,18,spinringhoriz2</event>
   <event>320,25,spinringvert2</event>
   <event>324,17,spinringhoriz2</event>
+  <event>324,16,posezone</event>
+  <event>324,18,posezone</event>
   <event>328,25,spinringvert2</event>
   <event>332,13,spinringhoriz2</event>
   <event>336,15,spinringvert2</event>
+
 
   <event>344,12,trapdoor</event>
   <event>344,17,trapdoor</event>
   <event>344,22,trapdoor</event>
   <event>344,27,trapdoor</event>
-  
+  <event>344,16,posezone</event>
+  <event>344,18,posezone</event>
   <event>344,16,chainpose</event>
   <event>352,18,chainpose</event>
   <event>356,24,spinringvert2</event>

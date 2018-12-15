@@ -7,6 +7,7 @@ public class PoseZone : MonoBehaviour
     [SerializeField] private float spinSpeed = 1000f;
     [SerializeField] private float destroyTime = 0.5f;
     [SerializeField] private float acceleration = -2000f;
+    [SerializeField] private ParticleSystem poseParticles;
     bool pose = false;
     private SpriteEffects effects;
     float time = 0.0f;
@@ -27,6 +28,10 @@ public class PoseZone : MonoBehaviour
 
     public virtual void OnPose()
     {
+        if(poseParticles)
+        {
+            Instantiate(poseParticles,transform.position - new Vector3(0,0,0.4f), Quaternion.identity);
+        }
          CameraShake.Instance.ShakeCamera(0.6f,0.05f);
         ScoreManager.Instance.AddScore(20, "Pose Zone", transform.position);
         AudioManager.Instance.PlayAudio(AudioManager.Instance.poseSound);

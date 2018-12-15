@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveTutorial : MonoBehaviour
 {
-    [SerializeField] int spinCount = 5;
+    [SerializeField] float spinCount = 2;
 	// Use this for initialization
 	void Start () {
 		
@@ -15,15 +15,14 @@ public class MoveTutorial : MonoBehaviour
     {
 		GameObject obj = GameObject.FindGameObjectWithTag("Player");
         PlayerDancer dancer = obj.GetComponent<PlayerDancer>();
-        if(dancer && dancer.actionState == EActionState.AS_SPIN)
-        {
-            spinCount--;
-        }
-
-        if(spinCount <= 0)
+        if(dancer && dancer.actionState == EActionState.AS_SPIN && spinCount <= 0)
         {
             TutorialManager.Instance.NextPhase();
+            Destroy(transform.GetChild(0).gameObject);
+            Destroy(transform.GetChild(1).gameObject);
             Destroy(gameObject);
         }
+
+        spinCount -= Time.deltaTime;
 	}
 }
